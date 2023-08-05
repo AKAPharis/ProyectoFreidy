@@ -1,10 +1,13 @@
 package Identidades;
 
 public class Paciente {
+	
 	private Documentacion documento;
 	private String nombre;
 	private String estado;
 	private boolean interno;
+	private Medico medicoEncargago;
+	
 	public Documentacion getDocumento() {
 		return documento;
 	}
@@ -29,8 +32,11 @@ public class Paciente {
 	public void setInterno(boolean interno) {
 		this.interno = interno;
 	}
-	
-	
-	
+	public Medico getMedicoEncargago() {
+		return medicoEncargago;
+	}
+	public void setMedicoEncargago(Medico medicoEncargago) {
+		this.medicoEncargago = medicoEncargago;
+	}
 	
 }
