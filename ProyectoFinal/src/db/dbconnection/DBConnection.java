@@ -19,7 +19,7 @@ public class DBConnection {
 	public Connection getConnection() {
 		return connection;
 	}
-	
+	//metodo para cerrar la conexion
 	public void closeConnection() {
 		connection = null;
 	}
