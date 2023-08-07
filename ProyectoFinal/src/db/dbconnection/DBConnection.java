@@ -3,6 +3,7 @@ package db.dbconnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 public class DBConnection {
 	//Cambiar la conexion a lo hora de usar el programa
 	private String conectionString = "\"jdbc:mysql://localhost:3306/proyectofinal\",\"root\",\"P15m16o19!";
