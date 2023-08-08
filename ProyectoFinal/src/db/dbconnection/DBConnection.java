@@ -5,12 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	//Cambiar la conexion a lo hora de usar el programa
-	private String conectionString = "\"jdbc:mysql://localhost:3306/proyectofinal\",\"root\",\"P15m16o19!";
+	private String uri = "jdbc:mysql://localhost:3306/proyectofinal";
+	private String user = "root";
+	private String password = "P15m16o19!";
+	
 	private Connection connection = null ;
 	public DBConnection(){
+		
 		try {
-			connection = DriverManager.getConnection(conectionString);
+			connection = DriverManager.getConnection(uri,user,password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

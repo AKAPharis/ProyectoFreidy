@@ -2,9 +2,9 @@ package Identidades;
 
 public class Documentacion {
 	private String tipo;
-	private int noDocumento;
+	private String noDocumento;
 	
-	public Documentacion(String tipo,int noDocumento) {
+	public Documentacion(String tipo,String noDocumento) {
 		this.setTipo(tipo);
 		this.setNoDocumento(noDocumento);
 	}
@@ -16,10 +16,10 @@ public class Documentacion {
 		this.tipo = tipo;
 	}
 	
-	public int getNoDocumento() {
+	public String getNoDocumento() {
 		return noDocumento;
 	}
-	public void setNoDocumento(int noDocumento) {
+	public void setNoDocumento(String noDocumento) {
 		this.noDocumento = noDocumento;
 	}
 	
