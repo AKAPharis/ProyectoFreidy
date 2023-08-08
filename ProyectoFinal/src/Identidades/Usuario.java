@@ -2,11 +2,13 @@ package Identidades;
 
 public abstract class Usuario {
 	private String nombre;
+	private String apellido;
 	private Documentacion documento;
 	private String contraseña;
 	
-	public Usuario(String nombre,Documentacion documento,String contraseña) {
+	public Usuario(String nombre,String apellido, Documentacion documento,String contraseña) {
 		this.setNombre(nombre);
+		this.setApellido(apellido);
 		this.setDocumento(documento);
 		this.setContraseña(contraseña);
 	}
@@ -28,5 +30,13 @@ public abstract class Usuario {
 	}
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 }

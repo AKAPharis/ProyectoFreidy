@@ -6,8 +6,8 @@ public class Medico extends Usuario {
 	private String exequatur;
 	private String especializacion;
 	
-	public Medico(int idMedico,String exequatur,String especializacion,String nombre,Documentacion documento,String contraseña){
-		super(nombre,documento,contraseña);
+	public Medico(int idMedico,String exequatur,String especializacion,String nombre, String apellido, Documentacion documento,String contraseña){
+		super(nombre,apellido, documento,contraseña);
 		this.setIdMedico(idMedico);
 		this.setExequatur(exequatur);
 		this.setEspecializacion(especializacion);
