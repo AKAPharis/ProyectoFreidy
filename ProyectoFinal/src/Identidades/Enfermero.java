@@ -4,8 +4,10 @@ public class Enfermero extends Usuario {
 	private int idEnferma;
 	private String Grado;
 	
-	public Enfermero() {
-		super();
+	public Enfermero(int idEnferma,String Grado,String nombre,Documentacion documento,String contraseña) {
+		super(nombre,documento,contraseña);
+		this.setIdEnferma(idEnferma);
+		this.setGrado(Grado);
 	}
 	
 	public int getIdEnferma() {

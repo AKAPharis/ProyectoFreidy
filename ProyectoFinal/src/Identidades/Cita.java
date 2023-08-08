@@ -8,6 +8,12 @@ public class Cita {
 	private Date fecha;
 	private Consulta consulta;
 	
+	public Cita(int id,Date fecha,Consulta consulta) {
+		this.setId(id);
+		this.setFecha(fecha);
+		this.setConsulta(consulta);
+	}
+	
 	public int getId() {
 		return id;
 	}

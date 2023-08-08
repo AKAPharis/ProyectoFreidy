@@ -4,6 +4,11 @@ public abstract class Documentacion {
 	private String tipo;
 	private int noDocumento;
 	
+	public Documentacion(String tipo,int noDocumento) {
+		this.setTipo(tipo);
+		this.setNoDocumento(noDocumento);
+	}
+	
 	public String getTipo() {
 		return tipo;
 	}

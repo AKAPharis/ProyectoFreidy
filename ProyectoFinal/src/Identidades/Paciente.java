@@ -8,6 +8,15 @@ public class Paciente {
 	private boolean interno;
 	private Medico medicoEncargago;
 	
+	public Paciente(Documentacion documento,String nombre,String estado,boolean interno,Medico medicoEncargago) {
+		this.setDocumento(documento);
+		this.setNombre(nombre);
+		this.setEstado(estado);
+		this.setInterno(interno);
+		this.setMedicoEncargago(medicoEncargago);
+	}
+	
+	
 	public Documentacion getDocumento() {
 		return documento;
 	}

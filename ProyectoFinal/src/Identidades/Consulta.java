@@ -1,6 +1,5 @@
 package Identidades;
 
-import java.io.File;
 import java.sql.Date;
 
 public class Consulta {
@@ -8,7 +7,14 @@ public class Consulta {
 	private int idConsulta;
 	private Date fecha;
 	private Paciente paciente;
-	private File Receta;
+	private Receta receta;
+	
+	public Consulta(int idConsulta,Date fecha,Paciente paciente,Receta receta) {
+		this.setIdConsulta(idConsulta);
+		this.setFecha(fecha);
+		this.setPaciente(paciente);
+		this.setReceta(receta);
+	}
 	
 	public int getIdConsulta() {
 		return idConsulta;
@@ -28,10 +34,10 @@ public class Consulta {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
-	public File getReceta() {
-		return Receta;
+	public Receta getReceta() {
+		return receta;
 	}
-	public void setReceta(File receta) {
-		Receta = receta;
+	public void setReceta(Receta receta) {
+		this.receta = receta;
 	}
 }

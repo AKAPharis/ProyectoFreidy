@@ -3,11 +3,14 @@ package Identidades;
 public class Medico extends Usuario {
 	
 	private int idMedico;
-	private String Exequatur;
-	private String Especializacion;
+	private String exequatur;
+	private String especializacion;
 	
-	public Medico(){
-		super();
+	public Medico(int idMedico,String exequatur,String especializacion,String nombre,Documentacion documento,String contraseña){
+		super(nombre,documento,contraseña);
+		this.setIdMedico(idMedico);
+		this.setExequatur(exequatur);
+		this.setEspecializacion(especializacion);
 	}
 	
 	public int getIdMedico() {
@@ -17,15 +20,15 @@ public class Medico extends Usuario {
 		this.idMedico = idMedico;
 	}
 	public String getExequatur() {
-		return Exequatur;
+		return exequatur;
 	}
 	public void setExequatur(String exequatur) {
-		Exequatur = exequatur;
+		this.exequatur = exequatur;
 	}
 	public String getEspecializacion() {
-		return Especializacion;
+		return especializacion;
 	}
 	public void setEspecializacion(String especializacion) {
-		Especializacion = especializacion;
+		this.especializacion = especializacion;
 	}
 }
