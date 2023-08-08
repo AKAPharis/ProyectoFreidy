@@ -1,6 +1,6 @@
 package Identidades;
 
-public abstract class Documentacion {
+public class Documentacion {
 	private String tipo;
 	private int noDocumento;
 	
