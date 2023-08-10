@@ -86,6 +86,16 @@ public class Builder {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(20, 20, 20, 20);
+        
+        
+        GridBagConstraints gbcImg5 = new GridBagConstraints();
+        ImageIcon imageIcon5 = new ImageIcon("Imagenes/Saver.png");
+        Image scaledImage5 = imageIcon5.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon scaledImageIcon5 = new ImageIcon(scaledImage5);
+        JLabel imageLbl = new JLabel(scaledImageIcon5);
+        
+        gbc.gridy = 4;
+        panel1.add(imageLbl, gbcImg5);
 
         // Agregar el espacio vacío
         gbc.gridy = 7;
@@ -130,7 +140,7 @@ public class Builder {
         
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout());
-        ImageIcon imagen = new ImageIcon("Imagenes/city.png");
+        ImageIcon imagen = new ImageIcon("Imagenes/LogoHospital.png");
         JLabel lblImagen = new JLabel(imagen);
         lblImagen.setPreferredSize(new Dimension(imagen.getIconWidth(), imagen.getIconHeight()));       
         panel2.add(lblImagen);
@@ -231,7 +241,7 @@ public class Builder {
         
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BorderLayout());
-        ImageIcon imagen = new ImageIcon("Imagenes/city.png");
+        ImageIcon imagen = new ImageIcon("Imagenes/LogoHospital.png");
         JLabel lblImagen = new JLabel(imagen);
         lblImagen.setPreferredSize(new Dimension(imagen.getIconWidth(), imagen.getIconHeight()));       
         panel2.add(lblImagen);
