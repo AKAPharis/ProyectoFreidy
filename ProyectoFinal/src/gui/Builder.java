@@ -89,7 +89,7 @@ public class Builder {
         
         
         GridBagConstraints gbcImg5 = new GridBagConstraints();
-        ImageIcon imageIcon5 = new ImageIcon("Imagenes/Saver.png");
+        ImageIcon imageIcon5 = new ImageIcon("Imagenes/Saver1.png");
         Image scaledImage5 = imageIcon5.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon5 = new ImageIcon(scaledImage5);
         JLabel imageLbl = new JLabel(scaledImageIcon5);
