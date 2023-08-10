@@ -1,5 +1,6 @@
 package db.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,6 +22,35 @@ public class MedicoDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+	}
+	
+	
+	@SuppressWarnings("finally")
+	public boolean comprobarContraseña(int id,String contraseña) {
+		boolean result = false;
+		DBConnection connection = new DBConnection();
+		try {
+			Statement st = connection.getConnection().createStatement();
+			ResultSet rs = st.executeQuery("select contraseña from Medicos where idEnfermero = " + id);
+		
+			if(rs.next() == true) {
+			result = rs.getString("contraseña").equals(contraseña);
+			}
+			rs.close();
+			st.close();
+			connection.closeConnection();
+			return result;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			
+			return result;
+		}
+		
 		
 		
 		
