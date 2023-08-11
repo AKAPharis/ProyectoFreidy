@@ -3,7 +3,6 @@ package db.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import Identidades.Medico;
 import db.dbconnection.DBConnection;
 public class MedicoDAO {
