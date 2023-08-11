@@ -1,5 +1,6 @@
 package gui;
 
+import Identidades.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -17,6 +18,7 @@ import java.awt.TextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -33,6 +35,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.util.*;
 
 public class Builder {
 
@@ -252,7 +255,7 @@ public class Builder {
         btnGuardar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				if (nombreMedico.getText().equals("primer nombre") || apellidoMedico.getText().equals("primer apellido") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("documento") || exequatur.getText().equals("exequatur") || especializacion.getText().equals("especializacion") || contraseñaMedico.getText().equals("Contraseña")) {
-					JOptionPane.showMessageDialog(Ventana, "Debe completar los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(Ventana, "Debe completar todos los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					btnRegistroMedico(nombreMedico, apellidoMedico, tipoDocumentoMedico, noDocuementoMedico, exequatur, especializacion, contraseñaMedico);					
 				}
@@ -464,13 +467,21 @@ public class Builder {
 	    return comboBox;
 	}
 	
+	 public static int generateRandomID() {
+	        // rango de valores para el ID
+	        int minValue = 10000;
+	        int maxValue = 99999;
+
+	        // instancia de Random
+	        Random random = new Random();
+
+	        // Genera un número aleatorio dentro del rango especificado
+	        int generatedID = random.nextInt(maxValue - minValue + 1) + minValue;
+
+	        return generatedID;
+	    }
+	
 	private void btnRegistroMedico(JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
-		System.out.println(nombreMedico.getText());
-		System.out.println(apellidoMedico.getText());
-		System.out.println(tipoDocumentoMedico.getSelectedItem());
-		System.out.println(noDocuementoMedico.getText());
-		System.out.println(exequatur.getText());
-		System.out.println(especializacion.getText());
-		System.out.println(contraseñaMedico.getText());
+		
 	}
 }
