@@ -24,6 +24,7 @@ public class PacienteDAO {
 		    idMedico int not null,
 		    constraint FK_Paciente_Medico foreign key(idMedico) references Medicos(idMedico)
 			*/
+			//
 			Statement st = connection.getConnection().createStatement();
 			
 			st.executeUpdate("insert into Pacientes values("+paciente.getIdPaciente()+",'"+paciente.getNombre()+"','"+paciente.getApellido()+"','"+paciente.getEstado()+"',"+paciente.getMedicoEncargago().getIdMedico());
