@@ -1,16 +1,20 @@
 package Identidades;
 
 public class Paciente {
-	
+	private int idPaciente;
 	private Documentacion documento;
 	private String nombre;
+	private String apellido;
 	private String estado;
 	private boolean interno;
 	private Medico medicoEncargago;
+	private Habitacion habitacion;
 	
-	public Paciente(Documentacion documento,String nombre,String estado,boolean interno,Medico medicoEncargago) {
+	public Paciente(int idPaciente,Documentacion documento,String nombre,String apellido,String estado,boolean interno,Medico medicoEncargago) {
+		this.setIdPaciente(idPaciente);
 		this.setDocumento(documento);
 		this.setNombre(nombre);
+		this.setApellido(apellido);
 		this.setEstado(estado);
 		this.setInterno(interno);
 		this.setMedicoEncargago(medicoEncargago);
@@ -46,6 +50,36 @@ public class Paciente {
 	}
 	public void setMedicoEncargago(Medico medicoEncargago) {
 		this.medicoEncargago = medicoEncargago;
+	}
+
+
+	public String getApellido() {
+		return apellido;
+	}
+
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+
+	public int getIdPaciente() {
+		return idPaciente;
+	}
+
+
+	public void setIdPaciente(int idPaciente) {
+		this.idPaciente = idPaciente;
+	}
+
+
+	public Habitacion getHabitacion() {
+		return habitacion;
+	}
+
+
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
 	}
 	
 }
