@@ -13,36 +13,32 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Label;
 import java.awt.LayoutManager;
+import java.awt.TextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import Identidades.RegistrarEnfermero;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 
 public class Builder {
 
-	private JFrame Ventana, ventanaEmergente;
-	private JButton btnGuardar;
+	protected JFrame Ventana, ventanaEmergente;
+	protected JButton btnGuardar;
+	protected String[] comboBoxOptions = {"Cedula", "Pasaporte"};
 
 
 	/**
@@ -133,6 +129,7 @@ public class Builder {
         gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
         gbc.anchor = GridBagConstraints.CENTER;
         btnGuardar = new JButton("Iniciar sesión");
+        btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         panel1.add(btnGuardar, gbc);
         
         // Agregar el panel1 a la ventana
@@ -196,6 +193,14 @@ public class Builder {
         ventanaEmergente.setLayout(new GridLayout(1, 3));
         ventanaEmergente.setVisible(true);
         ventanaEmergente.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Para que al cerrar la ventana emergente no se cierre la ventana principal
+        Ventana.setVisible(false);
+        
+        ventanaEmergente.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	Ventana.setVisible(true);
+            }
+        });
         
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
@@ -207,34 +212,54 @@ public class Builder {
 
         // Agregar el espacio vacío
         gbc.gridy = 7;
+        gbc.gridwidth = 1;
         panel1.add(new JLabel(), gbc);
 
-     // Agregar el campo de ID
-        gbc.gridy = 8; 
+     // Agregar el campo de ID 
         gbc.gridwidth = 2;
-        createLabeledTextFieldPanel(panel1, "Nombre:", "primer nombre", gbc, 2);
-        gbc.gridy = 8; 
+        JTextField nombreMedico = createLabeledTextFieldPanel(panel1, "Nombre:", "primer nombre", gbc, 2);
         gbc.gridwidth = 2;
-        createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3);
-        gbc.gridy = 8; 
+        JTextField apellidoMedico = createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3);
+        gbc.gridwidth = 1;
+        JComboBox<String> tipoDocumentoMedico = createLabeledComboBox("Tipo de documento", comboBoxOptions, panel1, gbc, 4);
+        gbc.gridwidth = 1;
+        JTextField noDocuementoMedico = createLabeledTextFieldPanel(panel1, "numero de documento:", "documento", gbc, 4);
         gbc.gridwidth = 2;
-        createLabeledTextFieldPanel(panel1, "Documentacion:", "documento", gbc, 4);
-        gbc.gridy = 8; 
+        JTextField exequatur = createLabeledTextFieldPanel(panel1, "Exequatur:", "exequatur", gbc, 5); 
         gbc.gridwidth = 2;
-        createLabeledTextFieldPanel(panel1, "Exequatur:", "exequatur", gbc, 5);
-        gbc.gridy = 8; 
-        gbc.gridwidth = 2;
-        createLabeledTextFieldPanel(panel1, "Especializacion", "¿Cual es su especializacion?", gbc, 6);
+        JTextField especializacion = createLabeledTextFieldPanel(panel1, "Especializacion", "¿Cual es su especializacion?", gbc, 6);
         
         // Agregar el campo de Contraseña
-        gbc.gridy = 9; 
-        createPasswordField(panel1, "Contraseña", gbc, 7);
+        gbc.gridx = 0;
+        gbc.gridy = 13;
+        JTextField contraseñaMedico = createPasswordField(panel1, "Contraseña", gbc, 7);
+        
+        noDocuementoMedico.setEnabled(false);
+        tipoDocumentoMedico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (tipoDocumentoMedico.getSelectedIndex() != -1) {
+                    noDocuementoMedico.setEnabled(true);
+                }
+            }
+        });
 
      // Agregar el botón "Registrar"
-        gbc.gridy = 8; 
+        gbc.gridy = 14;
         gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
         gbc.anchor = GridBagConstraints.CENTER;
         btnGuardar = new JButton("Registrar");
+        btnGuardar.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if (nombreMedico.getText().equals("primer nombre") || apellidoMedico.getText().equals("primer apellido") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("documento") || exequatur.getText().equals("exequatur") || especializacion.getText().equals("especializacion") || contraseñaMedico.getText().equals("Contraseña")) {
+					JOptionPane.showMessageDialog(Ventana, "Debe completar los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
+				}else {
+					btnRegistroMedico(nombreMedico, apellidoMedico, tipoDocumentoMedico, noDocuementoMedico, exequatur, especializacion, contraseñaMedico);					
+				}
+				
+			}
+        	
+        });          
         panel1.add(btnGuardar, gbc);
         
         ventanaEmergente.add(panel1);
@@ -262,6 +287,14 @@ public class Builder {
          ventanaEmergente.setLayout(new GridLayout(1, 3));
          ventanaEmergente.setVisible(true);
          ventanaEmergente.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Para que al cerrar la ventana emergente no se cierre la ventana principal
+         Ventana.setVisible(false);
+         
+         ventanaEmergente.addWindowListener(new WindowAdapter() {
+             @Override
+             public void windowClosing(WindowEvent e) {
+             	Ventana.setVisible(true);
+             }
+         });
          
          JPanel panel1 = new JPanel();
          panel1.setLayout(new GridBagLayout());
@@ -276,24 +309,22 @@ public class Builder {
          panel1.add(new JLabel(), gbc);
 
          // Agregar el campo de ID
-         gbc.gridy = 8; 
          gbc.gridwidth = 2;
          createLabeledTextFieldPanel(panel1, "Nombre:", "primer nombre", gbc, 2);
-         gbc.gridy = 8; 
          gbc.gridwidth = 2;
-         createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3);
-         gbc.gridy = 8; 
-         gbc.gridwidth = 2;
-         createLabeledTextFieldPanel(panel1, "Documentacion:", "documento", gbc, 4);
-         gbc.gridy = 8; 
+         createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3); 
+         gbc.gridwidth = 1;
+         JComboBox<String> tipoDocumentoEnfermero = createLabeledComboBox("Seleccione una opción:", comboBoxOptions, panel1, gbc, 4);
+         gbc.gridwidth = 1;
+         createLabeledTextFieldPanel(panel1, "no. Documento", "documento", gbc, 4); 
          gbc.gridwidth = 2;
          createLabeledTextFieldPanel(panel1, "Grado:", "grado de enfermeria", gbc, 5);
          
          // Agregar el campo de Contraseña
-         gbc.gridy = 9; 
          createPasswordField(panel1, "Contraseña", gbc, 6);
 
       // Agregar el botón "Registrar"
+         gbc.gridx = 0;
          gbc.gridy = 7; 
          gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
          gbc.anchor = GridBagConstraints.CENTER;
@@ -304,7 +335,7 @@ public class Builder {
          
          JPanel panel2 = new JPanel();
          panel2.setLayout(new BorderLayout());
-         ImageIcon imagen = new ImageIcon("Imagenes/city.png");
+         ImageIcon imagen = new ImageIcon("Imagenes/LogoHospital.png");
          JLabel lblImagen = new JLabel(imagen);
          lblImagen.setPreferredSize(new Dimension(imagen.getIconWidth(), imagen.getIconHeight()));       
          panel2.add(lblImagen);
@@ -336,12 +367,15 @@ public class Builder {
          return null;
 	}
     
-	private JPanel createLabeledTextFieldPanel(JPanel panel, String labelText, String placeholder, GridBagConstraints gbc, int gridy) {
+	private JTextField createLabeledTextFieldPanel(JPanel panel, String labelText, String placeholder, GridBagConstraints gbc, int gridy) {
 		JPanel labeledTextFieldPanel = new JPanel(new BorderLayout());
 		
 		JTextField textField = new JTextField(20);
 		textField.setText(placeholder);
 		textField.setForeground(Color.GRAY);
+		
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
 		textField.addFocusListener(new FocusListener() {
 			public void focusGained(FocusEvent evt) {
 				if (textField.getText().equals(placeholder)) {
@@ -361,13 +395,14 @@ public class Builder {
 		JLabel label = new JLabel(labelText);
 		label.setForeground(Color.BLACK);
 		
+		
 		labeledTextFieldPanel.add(label, BorderLayout.NORTH);
 		labeledTextFieldPanel.add(textField, BorderLayout.CENTER);
 		
 		gbc.gridy = gridy;
 		panel.add(labeledTextFieldPanel, gbc);
 		
-		return labeledTextFieldPanel;
+		return textField;
 	}
 	
 	private JPasswordField createPasswordField(JPanel panel, String placeholder, GridBagConstraints gbc, int gridy) {
@@ -409,5 +444,33 @@ public class Builder {
 		panel.add(passwordPanel, gbc);
 		
 		return passwordField;
+	}
+	
+	private JComboBox<String> createLabeledComboBox(String labelText, String[] options, JPanel panel, GridBagConstraints gbc, int gridy) {
+	    JPanel comboBoxPanel = new JPanel(new BorderLayout());
+	    
+	    JComboBox<String> comboBox = new JComboBox<>(options);
+	    comboBox.setSelectedIndex(-1);  // No seleccionar ningún elemento por defecto
+	    
+	    JLabel label = new JLabel(labelText);
+	    label.setForeground(Color.BLACK);
+	    
+	    comboBoxPanel.add(label, BorderLayout.NORTH);
+	    comboBoxPanel.add(comboBox, BorderLayout.CENTER);
+	    
+	    gbc.gridy = gridy;
+	    panel.add(comboBoxPanel, gbc);
+	    
+	    return comboBox;
+	}
+	
+	private void btnRegistroMedico(JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
+		System.out.println(nombreMedico.getText());
+		System.out.println(apellidoMedico.getText());
+		System.out.println(tipoDocumentoMedico.getSelectedItem());
+		System.out.println(noDocuementoMedico.getText());
+		System.out.println(exequatur.getText());
+		System.out.println(especializacion.getText());
+		System.out.println(contraseñaMedico.getText());
 	}
 }
