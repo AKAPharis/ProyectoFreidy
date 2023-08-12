@@ -24,7 +24,7 @@ public class Documentacion {
 	}
 	
 	public String toString() {
-        return tipo +"-"+ noDocumento;
+        return tipo + noDocumento;
     }
 	
 }

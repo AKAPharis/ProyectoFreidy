@@ -2,6 +2,7 @@ package gui;
 
 import Identidades.*;
 
+import db.dao.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,10 +20,13 @@ import java.awt.TextField;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.mysql.cj.x.protobuf.MysqlxConnection.Close;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -255,7 +259,7 @@ public class Builder {
         btnGuardar = new JButton("Registrar");
         btnGuardar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				if (nombreMedico.getText().equals("primer nombre") || apellidoMedico.getText().equals("primer apellido") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("documento") || exequatur.getText().equals("exequatur") || especializacion.getText().equals("especializacion") || contraseñaMedico.getText().equals("Contraseña")) {
+				if (nombreMedico.getText().equals("primer nombre") || apellidoMedico.getText().equals("primer apellido") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("documento") || exequatur.getText().equals("exequatur") || especializacion.getText().equals("especializacion") || contraseñaMedico.getText().equals("Contraseña") || nombreMedico.getText().equals("") || apellidoMedico.getText().equals("") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("") || exequatur.getText().equals("") || especializacion.getText().equals("") || contraseñaMedico.getText().equals("")  ) {
 					JOptionPane.showMessageDialog(Ventana, "Debe completar todos los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
 					
@@ -331,25 +335,51 @@ public class Builder {
 
          // Agregar el campo de ID
          gbc.gridwidth = 2;
-         createLabeledTextFieldPanel(panel1, "Nombre:", "primer nombre", gbc, 2);
+         JTextField nombre = createLabeledTextFieldPanel(panel1, "Nombre:", "primer nombre", gbc, 2);
          gbc.gridwidth = 2;
-         createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3); 
+         JTextField apellido = createLabeledTextFieldPanel(panel1, "Apellido:", "primer apellido", gbc, 3); 
          gbc.gridwidth = 1;
-         JComboBox<String> tipoDocumentoEnfermero = createLabeledComboBox("Seleccione una opción:", comboBoxOptions, panel1, gbc, 4);
+         JComboBox<String> tipoDocumentoEnfermero = createLabeledComboBox("Tipo de documento:", comboBoxOptions, panel1, gbc, 4);
          gbc.gridwidth = 1;
-         createLabeledTextFieldPanel(panel1, "no. Documento", "documento", gbc, 4); 
+         JTextField noDocumentoEnfermero = createLabeledTextFieldPanel(panel1, "no. Documento", "documento", gbc, 4); 
          gbc.gridwidth = 2;
-         createLabeledTextFieldPanel(panel1, "Grado:", "grado de enfermeria", gbc, 5);
+         JTextField grado = createLabeledTextFieldPanel(panel1, "Grado:", "grado de enfermeria", gbc, 5);
          
          // Agregar el campo de Contraseña
-         createPasswordField(panel1, "Contraseña", gbc, 6);
+         JTextField contraseña = createPasswordField(panel1, "Contraseña", gbc, 6);
 
       // Agregar el botón "Registrar"
          gbc.gridx = 0;
          gbc.gridy = 7; 
          gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
          gbc.anchor = GridBagConstraints.CENTER;
-         btnGuardar = new JButton("Registrar");
+         btnGuardar.addActionListener(new ActionListener(){
+ 			public void actionPerformed(ActionEvent e) {
+ 				if (nombre.getText().equals("primer nombre") || apellido.getText().equals("primer apellido") || tipoDocumentoEnfermero.getSelectedItem() == null || noDocumentoEnfermero.getText().equals("documento") || grado.getText().equals("grado") || contraseña.getText().equals("Contraseña")) {
+ 					JOptionPane.showMessageDialog(Ventana, "Debe completar todos los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
+ 				}else {
+ 					
+ 					// Generar el ID aleatorio
+ 			        int idEnfermero = generateRandomID();
+ 			        Enfermero enfermero = new Enfermero(
+ 			        		idEnfermero,
+ 			        		nombre.getText(), 
+ 			        		apellido.getText(),
+ 			        		grado.getText(),
+ 			        		new Documentacion(tipoDocumentoEnfermero.getSelectedItem().toString(), noDocumentoEnfermero.getText()),
+ 			        		contraseña.getText()
+ 			        		);
+ 			        
+ 			        
+ 			        // Llamar al método btnRegistroMedico pasando la instancia de Medico y los demás campos
+ 			        btnRegistroEnfermero(enfermero, nombre, apellido, tipoDocumentoEnfermero, noDocumentoEnfermero, contraseña);				
+ 				}
+ 				
+ 			}
+
+			
+         	
+         });
          panel1.add(btnGuardar, gbc);
          
          ventanaEmergente.add(panel1);
@@ -500,24 +530,77 @@ public class Builder {
 	    }
 	
 	 private void btnRegistroMedico(Medico medico, JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
+		 Documentacion documentoValue = medico.getDocumento();
 		    int idMedico = medico.getIdMedico();
 		    String exequaturValue = medico.getExequatur();
 		    String especializacionValue = medico.getEspecializacion();
 		    String nombreValue = medico.getNombre();
 		    String apellidoValue = medico.getApellido();
-		    Documentacion documentoValue = medico.getDocumento();
+		    String tipoDocumento = documentoValue.getTipo();
+		    String noDocumento = documentoValue.getNoDocumento();
 		    String contraseñaValue = medico.getContraseña();
 		    
-		    // Aquí puedes usar las variables para realizar el registro del médico
-		    // Por ejemplo:
-		    System.out.println("ID Medico: " + idMedico);
-		    System.out.println("Exequatur: " + exequaturValue);
-		    System.out.println("Especializacion: " + especializacionValue);
-		    System.out.println("Nombre: " + nombreValue);
-		    System.out.println("Apellido: " + apellidoValue);
-		    System.out.println("documento: " + documentoValue);
-		    System.out.println("contraseña: " + contraseñaValue);
+		    if (esEntero(noDocumento) && esEntero(exequaturValue)) {
+		    medico.setIdMedico(idMedico);
+		    medico.setNombre(nombreValue);
+		    medico.setApellido(apellidoValue);
+		    medico.setDocumento(documentoValue);
+		    medico.setExequatur(exequaturValue);
+		    medico.setEspecializacion(especializacionValue);
+		    medico.setContraseña(contraseñaValue);
+		    
+		    MedicoDAO medicoDAO = new MedicoDAO();
+			    if (medicoDAO.agregarMedico(medico) == 0) {
+			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+medico.getIdMedico());
+			    	ventanaEmergente.dispose();
+					Ventana.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+		    } else {
+		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento y el exequatur solo aceptan valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		    } 
 		}
 	 
+	 private void btnRegistroEnfermero(Enfermero enfermero, JTextField nombre, JTextField apellido,JComboBox<String> tipoDocumento, JTextField noDocumento, JTextField contraseña) {
+		 Documentacion documentoValue = enfermero.getDocumento();
+		    int idEnfermero = enfermero.getIdEnferma();
+		    String gradoValue = enfermero.getGrado();
+		    String nombreValue = enfermero.getNombre();
+		    String apellidoValue = enfermero.getApellido();
+		    String tipoDocumentoEnfetemero = documentoValue.getTipo();
+		    String noDocumentoEnfermero = documentoValue.getNoDocumento();
+		    String contraseñaValue = enfermero.getContraseña();
+		    
+		    if (esEntero(noDocumentoEnfermero)) {
+		    enfermero.setIdEnferma(idEnfermero);
+		    enfermero.setNombre(nombreValue);
+		    enfermero.setApellido(apellidoValue);
+		    enfermero.setDocumento(documentoValue);
+		    enfermero.setGrado(gradoValue);
+		    enfermero.setContraseña(contraseñaValue);
+		    
+		    EnfermeroDAO enfermeroDAO = new EnfermeroDAO();
+			    if (enfermeroDAO.agregarEnfermero(enfermero) == 0) {
+			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+enfermero.getIdEnferma());
+			    	ventanaEmergente.dispose();
+					Ventana.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+		    } else {
+		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento y el exequatur solo aceptan valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
+			
+		}
+
+	public static boolean esEntero(String cadena) {
+	        try {
+	            Long.parseLong(cadena);
+	            return true;
+	        } catch (NumberFormatException e) {
+	            return false;
+	        }
+	    }
 }
 
