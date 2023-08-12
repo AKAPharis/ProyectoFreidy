@@ -1,6 +1,7 @@
 package gui;
 
 import Identidades.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -22,8 +23,6 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import Identidades.RegistrarEnfermero;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -186,6 +185,8 @@ public class Builder {
                 
         });        
     }
+    
+    
      
     private void registrarMedico() {
     	ventanaEmergente = new JFrame("Registro de medico");
@@ -257,7 +258,24 @@ public class Builder {
 				if (nombreMedico.getText().equals("primer nombre") || apellidoMedico.getText().equals("primer apellido") || tipoDocumentoMedico.getSelectedItem() == null || noDocuementoMedico.getText().equals("documento") || exequatur.getText().equals("exequatur") || especializacion.getText().equals("especializacion") || contraseñaMedico.getText().equals("Contraseña")) {
 					JOptionPane.showMessageDialog(Ventana, "Debe completar todos los campos de registro.", "Error", JOptionPane.ERROR_MESSAGE);
 				}else {
-					btnRegistroMedico(nombreMedico, apellidoMedico, tipoDocumentoMedico, noDocuementoMedico, exequatur, especializacion, contraseñaMedico);					
+					
+					// Generar el ID aleatorio
+			        int idMedico = generateRandomID();
+			        // Crear una instancia de Medico con los valores ingresados
+			        Medico medico = new Medico(
+			            idMedico,
+			            exequatur.getText(),
+			            especializacion.getText(),
+			            nombreMedico.getText(),
+			            apellidoMedico.getText(),
+			            // Puedes asignar los valores directamente a las propiedades de la instancia medico
+			            // Por ejemplo:
+			            new Documentacion(tipoDocumentoMedico.getSelectedItem().toString(), noDocuementoMedico.getText()),
+			            contraseñaMedico.getText()
+			        );
+			        
+			        // Llamar al método btnRegistroMedico pasando la instancia de Medico y los demás campos
+			        btnRegistroMedico(medico, nombreMedico, apellidoMedico, tipoDocumentoMedico, noDocuementoMedico, exequatur, especializacion, contraseñaMedico);				
 				}
 				
 			}
@@ -481,7 +499,25 @@ public class Builder {
 	        return generatedID;
 	    }
 	
-	private void btnRegistroMedico(JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
-		
-	}
+	 private void btnRegistroMedico(Medico medico, JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
+		    int idMedico = medico.getIdMedico();
+		    String exequaturValue = medico.getExequatur();
+		    String especializacionValue = medico.getEspecializacion();
+		    String nombreValue = medico.getNombre();
+		    String apellidoValue = medico.getApellido();
+		    Documentacion documentoValue = medico.getDocumento();
+		    String contraseñaValue = medico.getContraseña();
+		    
+		    // Aquí puedes usar las variables para realizar el registro del médico
+		    // Por ejemplo:
+		    System.out.println("ID Medico: " + idMedico);
+		    System.out.println("Exequatur: " + exequaturValue);
+		    System.out.println("Especializacion: " + especializacionValue);
+		    System.out.println("Nombre: " + nombreValue);
+		    System.out.println("Apellido: " + apellidoValue);
+		    System.out.println("documento: " + documentoValue);
+		    System.out.println("contraseña: " + contraseñaValue);
+		}
+	 
 }
+

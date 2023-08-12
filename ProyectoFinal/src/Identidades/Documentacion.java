@@ -23,5 +23,9 @@ public class Documentacion {
 		this.noDocumento = noDocumento;
 	}
 	
+	public String toString() {
+        return tipo +"-"+ noDocumento;
+    }
+	
 }
 
