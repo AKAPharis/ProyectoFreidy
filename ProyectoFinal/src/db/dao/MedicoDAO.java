@@ -7,7 +7,8 @@ import Identidades.Medico;
 import db.dbconnection.DBConnection;
 public class MedicoDAO {
 	
-	public void agregarMedico(Medico medico) {
+	public int agregarMedico(Medico medico) {
+		int result = 0;
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
@@ -20,12 +21,13 @@ public class MedicoDAO {
 			connection.commit();
 		}catch(SQLException e) {
 			connection.rollback();
+			result = 1;
 			e.printStackTrace();
 		}finally{
 			
 			connection.closeConnection();
 		}
-		
+		return result;
 		
 		
 		
