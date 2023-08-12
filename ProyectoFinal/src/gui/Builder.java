@@ -353,6 +353,7 @@ public class Builder {
          gbc.gridy = 7; 
          gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
          gbc.anchor = GridBagConstraints.CENTER;
+         btnGuardar = new JButton("Registrar");
          btnGuardar.addActionListener(new ActionListener(){
  			public void actionPerformed(ActionEvent e) {
  				if (nombre.getText().equals("primer nombre") || apellido.getText().equals("primer apellido") || tipoDocumentoEnfermero.getSelectedItem() == null || noDocumentoEnfermero.getText().equals("documento") || grado.getText().equals("grado") || contraseña.getText().equals("Contraseña")) {
