@@ -9,7 +9,8 @@ import db.dbconnection.DBConnection;
 
 public class EnfermeroDAO {
 
-	public void agregarEnfermero(Enfermero enfermero) {
+	public int agregarEnfermero(Enfermero enfermero) {
+		int result = 0;
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
@@ -18,12 +19,15 @@ public class EnfermeroDAO {
 			st.executeUpdate("insert into Enfermeros values("+enfermero.getIdEnferma()+",'"+enfermero.getNombre()+"','"+enfermero.getApellido()+"','"+enfermero.getGrado()+"','"+enfermero.getContraseña()+"')");
 			System.out.println("insert into DocumentoEnfermero(tipoDocumento,noDocumento,idEnfermero) values('"+enfermero.getDocumento().getTipo()+"','"+enfermero.getDocumento().getNoDocumento()+"',"+enfermero.getIdEnferma()+")");
 			st.executeUpdate("insert into DocumentoEnfermero(tipoDocumento,noDocumento,idEnfermero) values('"+enfermero.getDocumento().getTipo()+"','"+enfermero.getDocumento().getNoDocumento()+"',"+enfermero.getIdEnferma()+")");
+			connection.commit();
 			st.close();
 			connection.closeConnection();
 		}catch(SQLException e) {
+			connection.rollback();
+			result = 1;
 			e.printStackTrace();
 		}
-		
+		return result;
 		
 		
 		
@@ -43,6 +47,7 @@ public class EnfermeroDAO {
 			if(rs.next() == true) {
 			result = rs.getString("contraseña").equals(contraseña);
 			}
+			
 			rs.close();
 			st.close();
 			connection.closeConnection();

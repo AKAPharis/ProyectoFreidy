@@ -35,30 +35,35 @@ public class PacienteDAO {
 		return paciente;
 	}
 	
-	public void agregarPaciente(Paciente paciente) {
+	public int agregarPaciente(Paciente paciente) {
+		int result = 0;
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			
-			st.executeUpdate("insert into Pacientes values("+paciente.getIdPaciente()+",'"+paciente.getNombre()+"','"+paciente.getApellido()+"','"+paciente.getEstado()+"',"+paciente.getMedicoEncargago().getIdMedico());
-			st.executeUpdate("insert into DocumentoPaciente(tipo,noDocumento,idPaciente) values('"+paciente.getDocumento().getTipo()+"','"+paciente.getDocumento().getNoDocumento()+"',"+paciente.getIdPaciente());
+			System.out.println("insert into Pacientes values("+paciente.getIdPaciente()+",'"+paciente.getNombre()+"','"+paciente.getApellido()+"','"+paciente.getEstado()+"',"+paciente.getMedicoEncargago().getIdMedico()+")");
+			st.executeUpdate("insert into Pacientes values("+paciente.getIdPaciente()+",'"+paciente.getNombre()+"','"+paciente.getApellido()+"','"+paciente.getEstado()+"',"+paciente.getMedicoEncargago().getIdMedico()+")");
+			System.out.println("insert into DocumentoPaciente(tipoDocumento,noDocumento,idPaciente) values('"+paciente.getDocumento().getTipo()+"','"+paciente.getDocumento().getNoDocumento()+"',"+paciente.getIdPaciente()+")");
+			st.executeUpdate("insert into DocumentoPaciente(tipoDocumento,noDocumento,idPaciente) values('"+paciente.getDocumento().getTipo()+"','"+paciente.getDocumento().getNoDocumento()+"',"+paciente.getIdPaciente()+")");
 			if(paciente.isInterno()) {
 				st.executeUpdate("update Habitacion set idPaciente = " +paciente+" where idHabitacion = "+paciente.getHabitacion().getNoHabitacion() );
 
 			}
-
+			connection.commit();
 			st.close();
 			connection.closeConnection();
 		}catch(SQLException e) {
+			connection.rollback();
+			result =  1;
 			e.printStackTrace();
 		}
+		return result;
 	}
 	
 	public void eliminarPaciente(Paciente paciente) {
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			st.executeUpdate("delete from Paciente where idPaciente = " + paciente.getIdPaciente());
+			st.executeUpdate("delete from Pacientes where idPaciente = " + paciente.getIdPaciente());
 			st.executeUpdate("delete from DocumentoPaciente where idPaciente = " + paciente.getIdPaciente());
 			st.executeUpdate("update Habitacion set idPaciente = null where idPaciente = " + paciente.getIdPaciente());
 
