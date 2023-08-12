@@ -15,11 +15,15 @@ public class MedicoDAO {
 			st.executeUpdate("insert into Medicos values(" +medico.getIdMedico()+",'" + medico.getNombre() +"','"+medico.getApellido()+"','"+medico.getExequatur()+"','"+medico.getEspecializacion()+"','"+medico.getContraseña()+"')");
 			System.out.println("insert into DocumentoMedico(tipoDocumento,noDocumento,idMedico) values('" +medico.getDocumento().getTipo()+"','"+medico.getDocumento().getNoDocumento()+"',"+medico.getIdMedico()+")");
 			st.executeUpdate("insert into DocumentoMedico(tipoDocumento,noDocumento,idMedico) values('" +medico.getDocumento().getTipo()+"','"+medico.getDocumento().getNoDocumento()+"',"+medico.getIdMedico()+")");
-
+			
 			st.close();
-			connection.closeConnection();
+			connection.commit();
 		}catch(SQLException e) {
+			connection.rollback();
 			e.printStackTrace();
+		}finally{
+			
+			connection.closeConnection();
 		}
 		
 		
