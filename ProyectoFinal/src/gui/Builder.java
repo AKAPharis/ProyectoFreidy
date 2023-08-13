@@ -42,9 +42,11 @@ import java.util.*;
 
 public class Builder {
 
-	protected JFrame Ventana, ventanaEmergente;
-	protected JButton btnGuardar;
-	protected String[] comboBoxOptions = {"Cedula", "Pasaporte"};
+	private JFrame Ventana, ventanaEmergente;
+	private JButton btnGuardar;
+	private String[] comboBoxOptions = {"Cedula", "Pasaporte"};
+    private String[] buttonLabels = {"Medico", "Enfermero"};
+	
 
 
 	/**
@@ -84,35 +86,41 @@ public class Builder {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
 
-     // Crear un nuevo objeto GridBagConstraints para cada componente
+        // Crear un nuevo objeto GridBagConstraints para cada componente
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(20, 20, 20, 20);
-        
-        
+
+        // Crear un ButtonGroup para los radio buttons
+        gbc.gridy = 1;
+        ButtonGroup buttonGroup = createButtonGroupPanel(panel1, buttonLabels, gbc, 1);
+
         GridBagConstraints gbcImg5 = new GridBagConstraints();
         ImageIcon imageIcon5 = new ImageIcon("Imagenes/Saver1.png");
         Image scaledImage5 = imageIcon5.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         ImageIcon scaledImageIcon5 = new ImageIcon(scaledImage5);
         JLabel imageLbl = new JLabel(scaledImageIcon5);
-        
-        gbc.gridy = 4;
+
+        gbc.gridy = 0;
         panel1.add(imageLbl, gbcImg5);
 
-        // Agregar el espacio vacío
-        gbc.gridy = 7;
-        panel1.add(new JLabel(), gbc);
-
         // Agregar el campo de ID
-        gbc.gridy = 8; 
-        createLabeledTextFieldPanel(panel1, "ID:", "insertar ID", gbc, 2);
+        gbc.gridy = 2;
+        createLabeledTextFieldPanel(panel1, "ID:", "insertar ID", gbc, 3);
 
         // Agregar el campo de Contraseña
-        gbc.gridy = 9; 
-        createPasswordField(panel1, "Contraseña", gbc, 3);
+        gbc.gridy = 3;
+        createPasswordField(panel1, "Contraseña", gbc, 4);
+
+        // Agregar el botón "Iniciar sesión"
+        gbc.gridy = 5;
+        gbc.anchor = GridBagConstraints.CENTER;
+        btnGuardar = new JButton("Iniciar sesión");
+        panel1.add(btnGuardar, gbc);
+        // Resto de tu código para el botón "Iniciar sesión"
 
         // Agregar el JLabel de registro
-        gbc.gridy = 10; 
+        gbc.gridy = 6;
         JLabel registroLabel = new JLabel("Registrar");
         registroLabel.setForeground(Color.BLUE);
         registroLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -130,13 +138,6 @@ public class Builder {
         gbcRegistroLabel.anchor = GridBagConstraints.SOUTHWEST; // Alineación en la esquina inferior izquierda
         panel1.add(registroLabel, gbcRegistroLabel);
 
-        // Agregar el botón "Iniciar sesión"
-        gbc.gridy = 4; 
-        gbc.gridwidth = 2; // Ocupar 2 celdas horizontales
-        gbc.anchor = GridBagConstraints.CENTER;
-        btnGuardar = new JButton("Iniciar sesión");
-        btnGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        panel1.add(btnGuardar, gbc);
         
         // Agregar el panel1 a la ventana
         Ventana.add(panel1);
@@ -603,5 +604,24 @@ public class Builder {
 	            return false;
 	        }
 	    }
+	
+	private ButtonGroup createButtonGroupPanel(JPanel panel, String[] buttonLabels, GridBagConstraints gbc, int gridy) {
+	    ButtonGroup buttonGroup = new ButtonGroup();
+	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
+
+	    for (int i = 0; i < buttonLabels.length; i++) {
+	        JRadioButton radioButton = new JRadioButton(buttonLabels[i]);
+	        buttonGroup.add(radioButton);
+	        buttonPanel.add(radioButton);
+	    }
+	    
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+
+	    panel.add(buttonPanel, gbc);
+	    gbc.gridy++;
+
+	    return buttonGroup;
+	}
 }
 
