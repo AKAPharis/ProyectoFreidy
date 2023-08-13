@@ -135,7 +135,7 @@ public class Builder {
         
         GridBagConstraints gbcRegistroLabel = new GridBagConstraints();
         gbcRegistroLabel.gridx = 0; // Columna 0
-        gbcRegistroLabel.gridy = 12; 
+        gbcRegistroLabel.gridy = 5; 
         gbcRegistroLabel.anchor = GridBagConstraints.SOUTHWEST; // Alineación en la esquina inferior izquierda
         panel1.add(registroLabel, gbcRegistroLabel);
 
