@@ -3,6 +3,8 @@ package db.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import Identidades.Documentacion;
 import Identidades.Medico;
 import db.dbconnection.DBConnection;
 public class MedicoDAO {
@@ -31,6 +33,32 @@ public class MedicoDAO {
 		
 		
 		
+	}
+	
+	public Medico getMedico(int id) {
+		Medico medico = null;
+		DBConnection connection = new DBConnection();
+
+		try {
+			Statement st = connection.getConnection().createStatement();
+			ResultSet rs = st.executeQuery("select m.idMedico,m.nombre,m.apellido,m.exequatur,m.especializacion,m.contraseña,dm.tipoDocumento,dm.noDocumento from Medicos m "
+					+ "inner join DocumentoMedico dm on dm.idMedico = m.idMedico"
+					+ " where m.idMedico = " + id);
+
+			if(rs.next() == true) {
+			medico = new Medico(rs.getInt("m.idMedico"),rs.getString("m.exequatur"),rs.getString("m.especializacion"),rs.getString("m.nombre"),rs.getString("m.apellido"), new Documentacion(rs.getString("md.tipoDocumento"),rs.getString("md.noDocumento")),rs.getString("m.contraseña"));
+			}
+			rs.close();
+			st.close();
+			connection.closeConnection();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally{
+			
+			connection.closeConnection();
+		}
+		
+		return medico;
 	}
 	
 	
