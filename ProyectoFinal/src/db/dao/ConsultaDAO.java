@@ -12,6 +12,38 @@ import Identidades.Receta;
 import db.dbconnection.DBConnection;
 
 public class ConsultaDAO {
+	
+	public boolean comprobarId(int id) {
+		boolean result = false;
+		DBConnection connection = new DBConnection();
+		try {
+			Statement st = connection.getConnection().createStatement();
+			ResultSet rs = st.executeQuery("select idPaciente from Pacientes where idPaciente = " + id);
+		
+			if(rs.next() == true) {
+			result = rs.getString("contraseña").equals(id);
+			}
+			
+			rs.close();
+			st.close();
+			connection.closeConnection();
+			return result;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+			
+			return result;
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	public List<Consulta> listaConsulta(Medico encargado) {
 		DBConnection connection = new DBConnection();
 		PacienteDAO pDAO = new PacienteDAO();
@@ -45,6 +77,7 @@ public class ConsultaDAO {
 			}
 			RecetaDAO rDAO = new RecetaDAO();
 			rDAO.agregarReceta(consulta.getReceta(), consulta.getIdConsulta());
+			
 			connection.commit();
 			st.close();
 			connection.closeConnection();

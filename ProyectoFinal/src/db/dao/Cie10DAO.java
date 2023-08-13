@@ -38,13 +38,13 @@ public class Cie10DAO {
 		return listaCodigos;
 	}
 	
-	public int getId(String nombre) {
+	public int getId(String descripcion) {
 		int id = 0 ;
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("select id from cie10");
-			if(rs.next()) {
+			ResultSet rs = st.executeQuery("select id from cie10 where descripcion = '" + descripcion+ "'");
+			while(rs.next()) {
 			 id = rs.getInt("id");				
 			}
 				
