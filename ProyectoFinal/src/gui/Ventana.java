@@ -125,7 +125,7 @@ public class Ventana {
 	     panel1.setLayout(new GridBagLayout());
 	     
 	     GridBagConstraints gbcImage = new GridBagConstraints();
-         ImageIcon imageIcon = new ImageIcon("ima/Cruz.png");
+         ImageIcon imageIcon = new ImageIcon("imagenes/Cruz.png");
          Image scaledImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
          JLabel imageLabel = new JLabel(scaledImageIcon);
@@ -185,7 +185,7 @@ public class Ventana {
 	     panel2 = new JPanel();
 	     panel2.setLayout(new GridBagLayout());
 	     GridBagConstraints gbcImage22 = new GridBagConstraints();
-         ImageIcon imageIcon22 = new ImageIcon("ima/Citas.jpg");
+         ImageIcon imageIcon22 = new ImageIcon("imagenes/Citas.jpg");
          Image scaledImage22 = imageIcon22.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon22 = new ImageIcon(scaledImage22);
          JLabel imageLabel22 = new JLabel(scaledImageIcon22);
@@ -204,7 +204,7 @@ public class Ventana {
 				@Override
         	    public void mouseEntered(MouseEvent e) {
         	        // Cambiar la imagen al pasar el mouse por encima
-        	        ImageIcon newImageIcon22 = new ImageIcon("ima/Citas2.jpg");
+        	        ImageIcon newImageIcon22 = new ImageIcon("imagenes/Citas2.jpg");
         	        Image newScaledImage22 = newImageIcon22.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         	        ImageIcon newScaledImageIcon22 = new ImageIcon(newScaledImage22);
         	        imageLabel22.setIcon(newScaledImageIcon22);
@@ -213,7 +213,7 @@ public class Ventana {
         	    @Override
         	    public void mouseExited(MouseEvent e) {
         	        // Restaurar la imagen original al quitar el mouse
-        	        ImageIcon originalImageIcon22 = new ImageIcon("ima/Citas.jpg");
+        	        ImageIcon originalImageIcon22 = new ImageIcon("imagenes/Citas.jpg");
         	        Image originalScaledImage22 = originalImageIcon22.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         	        ImageIcon originalScaledImageIcon22 = new ImageIcon(originalScaledImage22);
         	        imageLabel22.setIcon(originalScaledImageIcon22);
@@ -516,7 +516,7 @@ public class Ventana {
          
          
          GridBagConstraints gbcImage3 = new GridBagConstraints();
-         ImageIcon imageIcon3 = new ImageIcon("ima/Consulta1.png");
+         ImageIcon imageIcon3 = new ImageIcon("imagenes/Consulta1.png");
          Image scaledImage3 = imageIcon3.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon3 = new ImageIcon(scaledImage3);
          JLabel imageLabel3 = new JLabel(scaledImageIcon3);
@@ -530,7 +530,7 @@ public class Ventana {
      	    @Override
      	    public void mouseEntered(MouseEvent e) {
      	        // Cambiar la imagen al pasar el mouse por encima
-     	        ImageIcon newImageIcon4 = new ImageIcon("ima/Consulta2.png");
+     	        ImageIcon newImageIcon4 = new ImageIcon("imagenes/Consulta2.png");
      	        Image newScaledImage4 = newImageIcon4.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon newScaledImageIcon4 = new ImageIcon(newScaledImage4);
      	        imageLabel3.setIcon(newScaledImageIcon4);
@@ -539,7 +539,7 @@ public class Ventana {
      	    @Override
      	    public void mouseExited(MouseEvent e) {
      	        // Restaurar la imagen original al quitar el mouse
-     	        ImageIcon originalImageIcon = new ImageIcon("ima/Consulta1.png");
+     	        ImageIcon originalImageIcon = new ImageIcon("imagenes/Consulta1.png");
      	        Image originalScaledImage = originalImageIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon originalScaledImageIcon = new ImageIcon(originalScaledImage);
      	        imageLabel3.setIcon(originalScaledImageIcon);
@@ -560,7 +560,7 @@ public class Ventana {
         
          
          GridBagConstraints gbcImage5 = new GridBagConstraints();
-         ImageIcon imageIcon5 = new ImageIcon("ima/Saver.png");
+         ImageIcon imageIcon5 = new ImageIcon("imagenes/Saver.png");
          Image scaledImage5 = imageIcon5.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon5 = new ImageIcon(scaledImage5);
          JLabel imageLabel5 = new JLabel(scaledImageIcon5);
@@ -573,7 +573,7 @@ public class Ventana {
          
          
          GridBagConstraints gbcImage7 = new GridBagConstraints();
-         ImageIcon imageIcon7 = new ImageIcon("ima/Pacientes1.png");
+         ImageIcon imageIcon7 = new ImageIcon("imagenes/Pacientes1.png");
          Image scaledImage7 = imageIcon7.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon7 = new ImageIcon(scaledImage7);
          JLabel imageLabel7 = new JLabel(scaledImageIcon7);
@@ -587,7 +587,7 @@ public class Ventana {
      	    @Override
      	    public void mouseEntered(MouseEvent e) {
      	        // Cambiar la imagen al pasar el mouse por encima
-     	        ImageIcon newImageIcon7 = new ImageIcon("ima/Pacientes2.png");
+     	        ImageIcon newImageIcon7 = new ImageIcon("imagenes/Pacientes2.png");
      	        Image newScaledImage7 = newImageIcon7.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon newScaledImageIcon7 = new ImageIcon(newScaledImage7);
      	        imageLabel7.setIcon(newScaledImageIcon7);
@@ -596,7 +596,7 @@ public class Ventana {
      	    @Override
      	    public void mouseExited(MouseEvent e) {
      	        // Restaurar la imagen original al quitar el mouse
-     	        ImageIcon originalImageIcon8 = new ImageIcon("ima/Pacientes2.png");
+     	        ImageIcon originalImageIcon8 = new ImageIcon("imagenes/Pacientes2.png");
      	        Image originalScaledImage8 = originalImageIcon8.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon originalScaledImageIcon8 = new ImageIcon(originalScaledImage8);
      	        imageLabel7.setIcon(originalScaledImageIcon8);
@@ -619,7 +619,7 @@ public class Ventana {
                
          
          GridBagConstraints gbcImage9 = new GridBagConstraints();
-         ImageIcon imageIcon9 = new ImageIcon("ima/Componente2.png");
+         ImageIcon imageIcon9 = new ImageIcon("imagenes/Componente2.png");
          Image scaledImage9 = imageIcon9.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon9 = new ImageIcon(scaledImage9);
          JLabel imageLabel9 = new JLabel(scaledImageIcon9);
