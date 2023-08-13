@@ -46,6 +46,7 @@ public class ConsultaM extends JFrame{
 		this.medicoUsuario = medicoUsuario;
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setBounds(0, 0, 400, 400);
 		
