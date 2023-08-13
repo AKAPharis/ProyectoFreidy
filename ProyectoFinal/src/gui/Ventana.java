@@ -560,7 +560,7 @@ public class Ventana {
         
          
          GridBagConstraints gbcImage5 = new GridBagConstraints();
-         ImageIcon imageIcon5 = new ImageIcon("imagenes/Saver.png");
+         ImageIcon imageIcon5 = new ImageIcon("imagenes/Saver1.png");
          Image scaledImage5 = imageIcon5.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
          ImageIcon scaledImageIcon5 = new ImageIcon(scaledImage5);
          JLabel imageLabel5 = new JLabel(scaledImageIcon5);
