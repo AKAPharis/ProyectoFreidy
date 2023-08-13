@@ -54,6 +54,7 @@ import com.toedter.calendar.JCalendar;
 
 import Identidades.Medico;
 import Identidades.Paciente;
+import db.dao.MedicoDAO;
 import db.dao.PacienteDAO;
 
 import javax.swing.JMenuBar;
@@ -89,11 +90,11 @@ public class Ventana {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(int idEntero) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventana window = new Ventana();
+					Ventana window = new Ventana(idEntero);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -105,7 +106,9 @@ public class Ventana {
 	/**
 	 * Create the application.
 	 */
-	public Ventana() {
+	public Ventana(int idEntero) {
+		MedicoDAO medicoDAO = new MedicoDAO();
+		this.medicoUsuario = medicoDAO.getMedico(idEntero);
 		initialize();
 	}
 
@@ -378,12 +381,10 @@ public class Ventana {
 		        	        	agendar.setVisible(true);
 		        	        	agendar.getContentPane().setLayout(null);	
 		        	            agendar.setResizable(false);
-		        	            JPanel panelGeneral = new JPanel();
-		        	            agendar.add(panelGeneral);
 		        	            
 								JLabel lbl1 = new JLabel("Paciente");
 		        	            lbl1.setBounds(10, 50, 180, 30);
-		        	            panelGeneral.add(lbl1);
+		        	            agendar.add(lbl1);
 		        	            
 		        	            pacientes = new JComboBox<Object>();
 		        	    		PacienteDAO pDAO = new PacienteDAO();
@@ -395,13 +396,13 @@ public class Ventana {
 		        	            pacientes.setBounds(100, 60, 300, 20);
 		        	            
 		        	            
-		        	            panelGeneral.add(pacientes);
+		        	            agendar.add(pacientes);
 		        	            		        	            
 		        	          
 		        	            
-		        	            JLabel lbl3 = new JLabel("Hora de inicio:");
+		        	            JLabel lbl3 = new JLabel("Fecha y hora:");
 		        	            lbl3.setBounds(10, 95, 180, 30);
-		        	            panelGeneral.add(lbl3);
+		        	            agendar.add(lbl3);
 		        	                   	            
    
 		        	            
@@ -426,13 +427,13 @@ public class Ventana {
 		        	            box2.addItem("09:00pm");
 		        	            box2.addItem("10:00pm");
 		        	            box2.addItem("11:00pm");
-		        	            panelGeneral.add(box2);
+		        	            agendar.add(box2);
 		        	            
 		        	            
 		        	            
 		        	    		 JComboBox<String> box3 = new JComboBox<>();
 		        	    	        box3.setBounds(100, 100, 150, 20);
-		        	    	        panelGeneral.add(box3);
+		        	    	        agendar.add(box3);
 		        	    	        
 		        	    	        JPopupMenu popupMenu1 = new JPopupMenu();
 		        	    	        JCalendar calendarBox1 = new JCalendar();
@@ -502,7 +503,7 @@ public class Ventana {
 										        }
 										}
 									});
-			        	            panelGeneral.add(btnGuardar);
+			        	            agendar.add(btnGuardar);
 		        	    	        
 			        	            
 		        	    	        
