@@ -559,10 +559,42 @@ public class Ventana {
      	            // Abre la nueva ventana aquí
      	            // Por ejemplo, creando una nueva instancia de JFrame
      	            JFrame newFrame = new JFrame("Nueva Ventana");
-     	            newFrame.setSize(400, 300);
+     	            newFrame.setSize(700, 500);
      	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      	            newFrame.setVisible(true);
+     	           newFrame.setLocationRelativeTo(null);
+   	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+   	            newFrame.setVisible(true);
+   	            newFrame.setResizable(false);
+   	    		newFrame.getContentPane().setLayout(null);
+   	    		
+   	    		
+   	    		DefaultTableModel model = new DefaultTableModel();
+   	    		model.addColumn("Ejemplo");
+   	    		
+   	    		JButton btnP = new JButton("Agregar Consulta");
+   	    		btnP.setBounds(10, 20, 200, 40);
+	            btnP.setFont(new Font("", Font.BOLD, 20));
+   	    		newFrame.add(btnP);
+   	    		btnP.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+					}
+				});
+   	    		
+   	    		JButton verConsulta = new JButton("Ver Consulta");
+   	    		verConsulta.setBounds(470, 20, 200, 40);
+   	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
+   	    		newFrame.add(verConsulta);
+   	    		
+   	    		JTable tabla = new JTable(model);
+   	    		tabla.setBounds(100, 80, 500, 500);
+   	    		newFrame.add(tabla);
+     	            
      	        }
+     	
      	    }
      	});
         
