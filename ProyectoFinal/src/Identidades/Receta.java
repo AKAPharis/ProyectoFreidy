@@ -1,10 +1,12 @@
 package Identidades;
 
+import java.util.List;
+
 public class Receta {
 	private int idReceta;
-	private Medicamento[] listaMedicamentos;
+	private List<Medicamento> listaMedicamentos;
 	
-	public Receta(int idReceta,Medicamento[] listaMedicamentos) {
+	public Receta(int idReceta,List<Medicamento> listaMedicamentos) {
 		this.setIdReceta(idReceta);
 		this.setListaMedicamentos(listaMedicamentos);
 	}
@@ -15,10 +17,10 @@ public class Receta {
 	public void setIdReceta(int idReceta) {
 		this.idReceta = idReceta;
 	}
-	public Medicamento[] getListaMedicamentos() {
+	public List<Medicamento> getListaMedicamentos() {
 		return listaMedicamentos;
 	}
-	public void setListaMedicamentos(Medicamento[] listaMedicamentos) {
+	public void setListaMedicamentos(List<Medicamento> listaMedicamentos) {
 		this.listaMedicamentos = listaMedicamentos;
 	}
 

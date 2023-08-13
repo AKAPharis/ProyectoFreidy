@@ -34,63 +34,32 @@ public class ConsultaDAO {
 		return lista;
 	}
 	
-	public void agregarConsulta(Consulta consulta) {
+	public int agregarConsulta(Consulta consulta) {
+		int result = 0;
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			/*
-			 * 
-create table Consulta
-(
-	idConsulta int not null primary key,
-    fecha date,
-	idPaciente int,
-	idMedico int not null,
-    constraint FK_Consulta_Paciente foreign key(idPaciente) references Pacientes(idPaciente),
-	constraint FK_Consulta_Medico foreign key(idMedico) references Medicos(idMedico)
-
-    
-)
-
-create table ConsultaDiagnostico
-(
-    idConsulta int not null,
-    idCIE int not null,
-    primary key(idConsulta,idCIE),
-    constraint FK_CD_Consulta foreign key(idConsulta) references Consulta(idConsulta),
-    constraint FK_CD_CIE foreign key(idCIE) references CIE10(id)
-    
-)	
-
-create table Receta
-(
-	idReceta int not null primary key,
-    idConsulta int not null,
-    constraint FK_Receta_Consulta foreign key(idConsulta) references Consulta(idConsulta)
-)
-
-create table DetalleReceta
-(
-	idReceta int not null,
-    idMedicamento int not null,
-    primary key(idReceta,idMedicamento),
-    constraint FK_Detalle_Receta foreign key(idReceta) references Receta(idReceta),
-    constraint FK_Detalle_Medicamento foreign key(idMedicamento) references Medicamento(idMedicamento)
-)
-
-			 */
-			st.executeUpdate("insert into Consulta values(" + consulta.getIdConsulta()+",'"+consulta.getFecha()+"',"+consulta.getPaciente().getIdPaciente()+","+consulta.getEncargado().getIdMedico());
+			st.executeUpdate("insert into Consulta values(" + consulta.getIdConsulta()+",'"+new java.sql.Date(consulta.getFecha().getTime())+"',"+consulta.getPaciente().getIdPaciente()+","+consulta.getEncargado().getIdMedico()+")");
 			for(int i = 0 ; i < consulta.getDiagnostico().length ; i++) {
 			st.executeUpdate("insert into ConsultaDiagnostico values("+consulta.getIdConsulta()+","+consulta.getDiagnostico()[i]+")");
 			}
-			
-			
+			RecetaDAO rDAO = new RecetaDAO();
+			rDAO.agregarReceta(consulta.getReceta(), consulta.getIdConsulta());
+			connection.commit();
 			st.close();
 			connection.closeConnection();
 		}catch(SQLException e) {
+			connection.rollback();
+			result = 1;
 			e.printStackTrace();
 		}
+		return result;
+	}
+	/*
+	public int[] getIdDiagnostico() {
+		int diagnostico[];
+		
 	}
 	
-	
+	*/
 }

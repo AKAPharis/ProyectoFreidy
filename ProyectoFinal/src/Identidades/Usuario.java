@@ -13,6 +13,10 @@ public abstract class Usuario {
 		this.setContraseña(contraseña);
 	}
 	
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getNombre() {
 		return nombre;
 	}

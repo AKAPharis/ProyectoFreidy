@@ -1,6 +1,6 @@
 package Identidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Consulta {
 	
@@ -9,7 +9,16 @@ public class Consulta {
 	private Paciente paciente;
 	private Receta receta;
 	private Medico encargado;
-	private int[] diagnostico;
+	private Object[] diagnostico;
+	
+	public Consulta(int idConsulta,Date fecha,Paciente paciente,Receta receta,Medico encargado,Object[] diagnostico) {
+		this.setIdConsulta(idConsulta);
+		this.setFecha(fecha);
+		this.setPaciente(paciente);
+		this.setReceta(receta);
+		this.setEncargado(encargado);
+		this.setDiagnostico(diagnostico);
+	}
 	
 	public Consulta(int idConsulta,Date fecha,Paciente paciente,Receta receta) {
 		this.setIdConsulta(idConsulta);
@@ -52,12 +61,12 @@ public class Consulta {
 	}
 
 
-	public int[] getDiagnostico() {
+	public Object[] getDiagnostico() {
 		return diagnostico;
 	}
 
 
-	public void setDiagnostico(int[] diagnostico) {
+	public void setDiagnostico(Object[] diagnostico) {
 		this.diagnostico = diagnostico;
 	}
 
