@@ -214,7 +214,7 @@ public class Builder {
 			if (mDao.comprobarContraseña(idEntero, contraseña)) {
 				//94978
 				//1234567890
-				Ventana ventana = new Ventana();
+				
 			}else {
 				JOptionPane.showMessageDialog(Ventana, "ID o contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
 			} 
