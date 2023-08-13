@@ -107,9 +107,10 @@ public class Ventana {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		 frame = new JFrame("Hospital MeDick");
 		 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+         frame.setResizable(false);
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.getContentPane().setLayout(new GridLayout(1, 1));
 		 
@@ -468,17 +469,24 @@ public class Ventana {
 											    String diaSeleccionado = (String) box3.getSelectedItem();
 											    String paciente = text.getText();
 
+										        boolean encontrado = false;
 											    // Buscar la fila correspondiente a la hora seleccionada en la tabla
 											    for (int row = 0; row < model.getRowCount(); row++) {
 											        String horaTabla = (String) model.getValueAt(row, 0);
 											        if (horaSeleccionada.equals(horaTabla)) {
 											            model.setValueAt(diaSeleccionado, row, 2); // Columna "Dia"
 											            model.setValueAt(paciente, row, 3); // Columna "Paciente"
+										                encontrado = true;
 											            break; // No es necesario seguir buscando
 											        }
 											    }
 										        agendar.dispose(); // Cerrar la ventana agendar después de guardar
 
+										        if (encontrado) {
+										            agendar.dispose(); // Cerrar la ventana agendar después de guardar
+										        } else {
+										            JOptionPane.showMessageDialog(agendar, "No se encontró la hora seleccionada en la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+										        }
 										}
 									});
 			        	            agendar.add(btnGuardar);
@@ -596,7 +604,7 @@ public class Ventana {
      	    @Override
      	    public void mouseExited(MouseEvent e) {
      	        // Restaurar la imagen original al quitar el mouse
-     	        ImageIcon originalImageIcon8 = new ImageIcon("imagenes/Pacientes2.png");
+     	        ImageIcon originalImageIcon8 = new ImageIcon("imagenes/Pacientes1.png");
      	        Image originalScaledImage8 = originalImageIcon8.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon originalScaledImageIcon8 = new ImageIcon(originalScaledImage8);
      	        imageLabel7.setIcon(originalScaledImageIcon8);
