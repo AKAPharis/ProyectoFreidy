@@ -212,8 +212,9 @@ public class Builder {
 			int idEntero = Integer.parseInt(id);
 				
 			if (mDao.comprobarContraseña(idEntero, contraseña)) {
-				JOptionPane.showMessageDialog(Ventana, "Datos correctos :D");
-				JOptionPane.showMessageDialog(Ventana, "*se abre la ventana principal xd*");
+				//94978
+				//1234567890
+				Ventana ventana = new Ventana();
 			}else {
 				JOptionPane.showMessageDialog(Ventana, "ID o contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
 			} 
@@ -234,8 +235,6 @@ public class Builder {
 			int idEntero = Integer.parseInt(id);
 				
 			if (eDao.comprobarContraseña(idEntero, contraseña)) {
-				//94978
-				//1234567890
 				JOptionPane.showMessageDialog(Ventana, "Datos correctos :D");
 				JOptionPane.showMessageDialog(Ventana, "*se abre la ventana principal xd*");
 			}else {
