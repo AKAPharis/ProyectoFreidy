@@ -28,7 +28,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -52,13 +52,17 @@ import javax.swing.table.TableColumn;
 
 import com.toedter.calendar.JCalendar;
 
+import Identidades.Medico;
+import Identidades.Paciente;
+import db.dao.PacienteDAO;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 
 public class Ventana {
-
+	private Medico medicoUsuario;
 	private JFrame frame;
 	private JScrollPane scrollPane;
 	private JPanel panel1, panel2, panel3, panel4;
@@ -78,6 +82,7 @@ public class Ventana {
       private boolean menuVisible = false; // Bandera para verificar si el menú está visible
   	private DefaultTableModel model;
   	private Date selectedDate = null;
+  	private JComboBox<Object> pacientes;
 
       
 
@@ -373,22 +378,30 @@ public class Ventana {
 		        	        	agendar.setVisible(true);
 		        	        	agendar.getContentPane().setLayout(null);	
 		        	            agendar.setResizable(false);
+		        	            JPanel panelGeneral = new JPanel();
+		        	            agendar.add(panelGeneral);
 		        	            
 								JLabel lbl1 = new JLabel("Paciente");
 		        	            lbl1.setBounds(10, 50, 180, 30);
-		        	            agendar.add(lbl1);
+		        	            panelGeneral.add(lbl1);
 		        	            
-		        	            JTextField text = new JTextField();
-		        	            text.setBounds(100, 60, 300, 20);
+		        	            pacientes = new JComboBox<Object>();
+		        	    		PacienteDAO pDAO = new PacienteDAO();
+		        	    		List<Paciente> listaPacientes = pDAO.listaPacientes(medicoUsuario);
+		        	    		
+		        	    		for(Paciente p : listaPacientes) {
+		        	    			pacientes.addItem(p.getNombre() + " " + p.getApellido());
+		        	    		}
+		        	            pacientes.setBounds(100, 60, 300, 20);
 		        	            
 		        	            
-		        	            agendar.add(text);
+		        	            panelGeneral.add(pacientes);
 		        	            		        	            
 		        	          
 		        	            
 		        	            JLabel lbl3 = new JLabel("Hora de inicio:");
 		        	            lbl3.setBounds(10, 95, 180, 30);
-		        	            agendar.add(lbl3);
+		        	            panelGeneral.add(lbl3);
 		        	                   	            
    
 		        	            
@@ -413,13 +426,13 @@ public class Ventana {
 		        	            box2.addItem("09:00pm");
 		        	            box2.addItem("10:00pm");
 		        	            box2.addItem("11:00pm");
-		        	            agendar.add(box2);
+		        	            panelGeneral.add(box2);
 		        	            
 		        	            
 		        	            
 		        	    		 JComboBox<String> box3 = new JComboBox<>();
 		        	    	        box3.setBounds(100, 100, 150, 20);
-		        	    	        agendar.add(box3);
+		        	    	        panelGeneral.add(box3);
 		        	    	        
 		        	    	        JPopupMenu popupMenu1 = new JPopupMenu();
 		        	    	        JCalendar calendarBox1 = new JCalendar();
@@ -467,7 +480,7 @@ public class Ventana {
 											
 											  String horaSeleccionada = (String) box2.getSelectedItem();
 											    String diaSeleccionado = (String) box3.getSelectedItem();
-											    String paciente = text.getText();
+											    String paciente = (String) pacientes.getSelectedItem();
 
 										        boolean encontrado = false;
 											    // Buscar la fila correspondiente a la hora seleccionada en la tabla
@@ -489,7 +502,7 @@ public class Ventana {
 										        }
 										}
 									});
-			        	            agendar.add(btnGuardar);
+			        	            panelGeneral.add(btnGuardar);
 		        	    	        
 			        	            
 		        	    	        
