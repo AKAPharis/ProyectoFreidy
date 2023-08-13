@@ -28,7 +28,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -52,13 +52,17 @@ import javax.swing.table.TableColumn;
 
 import com.toedter.calendar.JCalendar;
 
+import Identidades.Medico;
+import Identidades.Paciente;
+import db.dao.PacienteDAO;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 
 public class Ventana {
-
+	private Medico medicoUsuario;
 	private JFrame frame;
 	private JScrollPane scrollPane;
 	private JPanel panel1, panel2, panel3, panel4;
@@ -78,6 +82,7 @@ public class Ventana {
       private boolean menuVisible = false; // Bandera para verificar si el menú está visible
   	private DefaultTableModel model;
   	private Date selectedDate = null;
+  	private JComboBox<Object> pacientes;
 
       
 
@@ -107,9 +112,10 @@ public class Ventana {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		 frame = new JFrame("Hospital MeDick");
 		 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+         frame.setResizable(false);
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.getContentPane().setLayout(new GridLayout(1, 1));
 		 
@@ -372,22 +378,30 @@ public class Ventana {
 		        	        	agendar.setVisible(true);
 		        	        	agendar.getContentPane().setLayout(null);	
 		        	            agendar.setResizable(false);
+		        	            JPanel panelGeneral = new JPanel();
+		        	            agendar.add(panelGeneral);
 		        	            
 								JLabel lbl1 = new JLabel("Paciente");
 		        	            lbl1.setBounds(10, 50, 180, 30);
-		        	            agendar.add(lbl1);
+		        	            panelGeneral.add(lbl1);
 		        	            
-		        	            JTextField text = new JTextField();
-		        	            text.setBounds(100, 60, 300, 20);
+		        	            pacientes = new JComboBox<Object>();
+		        	    		PacienteDAO pDAO = new PacienteDAO();
+		        	    		List<Paciente> listaPacientes = pDAO.listaPacientes(medicoUsuario);
+		        	    		
+		        	    		for(Paciente p : listaPacientes) {
+		        	    			pacientes.addItem(p.getNombre() + " " + p.getApellido());
+		        	    		}
+		        	            pacientes.setBounds(100, 60, 300, 20);
 		        	            
 		        	            
-		        	            agendar.add(text);
+		        	            panelGeneral.add(pacientes);
 		        	            		        	            
 		        	          
 		        	            
 		        	            JLabel lbl3 = new JLabel("Hora de inicio:");
 		        	            lbl3.setBounds(10, 95, 180, 30);
-		        	            agendar.add(lbl3);
+		        	            panelGeneral.add(lbl3);
 		        	                   	            
    
 		        	            
@@ -412,13 +426,13 @@ public class Ventana {
 		        	            box2.addItem("09:00pm");
 		        	            box2.addItem("10:00pm");
 		        	            box2.addItem("11:00pm");
-		        	            agendar.add(box2);
+		        	            panelGeneral.add(box2);
 		        	            
 		        	            
 		        	            
 		        	    		 JComboBox<String> box3 = new JComboBox<>();
 		        	    	        box3.setBounds(100, 100, 150, 20);
-		        	    	        agendar.add(box3);
+		        	    	        panelGeneral.add(box3);
 		        	    	        
 		        	    	        JPopupMenu popupMenu1 = new JPopupMenu();
 		        	    	        JCalendar calendarBox1 = new JCalendar();
@@ -466,22 +480,29 @@ public class Ventana {
 											
 											  String horaSeleccionada = (String) box2.getSelectedItem();
 											    String diaSeleccionado = (String) box3.getSelectedItem();
-											    String paciente = text.getText();
+											    String paciente = (String) pacientes.getSelectedItem();
 
+										        boolean encontrado = false;
 											    // Buscar la fila correspondiente a la hora seleccionada en la tabla
 											    for (int row = 0; row < model.getRowCount(); row++) {
 											        String horaTabla = (String) model.getValueAt(row, 0);
 											        if (horaSeleccionada.equals(horaTabla)) {
 											            model.setValueAt(diaSeleccionado, row, 2); // Columna "Dia"
 											            model.setValueAt(paciente, row, 3); // Columna "Paciente"
+										                encontrado = true;
 											            break; // No es necesario seguir buscando
 											        }
 											    }
 										        agendar.dispose(); // Cerrar la ventana agendar después de guardar
 
+										        if (encontrado) {
+										            agendar.dispose(); // Cerrar la ventana agendar después de guardar
+										        } else {
+										            JOptionPane.showMessageDialog(agendar, "No se encontró la hora seleccionada en la tabla", "Error", JOptionPane.ERROR_MESSAGE);
+										        }
 										}
 									});
-			        	            agendar.add(btnGuardar);
+			        	            panelGeneral.add(btnGuardar);
 		        	    	        
 			        	            
 		        	    	        
@@ -551,10 +572,42 @@ public class Ventana {
      	            // Abre la nueva ventana aquí
      	            // Por ejemplo, creando una nueva instancia de JFrame
      	            JFrame newFrame = new JFrame("Nueva Ventana");
-     	            newFrame.setSize(400, 300);
+     	            newFrame.setSize(700, 500);
      	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      	            newFrame.setVisible(true);
+     	           newFrame.setLocationRelativeTo(null);
+   	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+   	            newFrame.setVisible(true);
+   	            newFrame.setResizable(false);
+   	    		newFrame.getContentPane().setLayout(null);
+   	    		
+   	    		
+   	    		DefaultTableModel model = new DefaultTableModel();
+   	    		model.addColumn("Ejemplo");
+   	    		
+   	    		JButton btnP = new JButton("Agregar Consulta");
+   	    		btnP.setBounds(10, 20, 200, 40);
+	            btnP.setFont(new Font("", Font.BOLD, 20));
+   	    		newFrame.add(btnP);
+   	    		btnP.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+					}
+				});
+   	    		
+   	    		JButton verConsulta = new JButton("Ver Consulta");
+   	    		verConsulta.setBounds(470, 20, 200, 40);
+   	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
+   	    		newFrame.add(verConsulta);
+   	    		
+   	    		JTable tabla = new JTable(model);
+   	    		tabla.setBounds(100, 80, 500, 500);
+   	    		newFrame.add(tabla);
+     	            
      	        }
+     	
      	    }
      	});
         
@@ -596,7 +649,7 @@ public class Ventana {
      	    @Override
      	    public void mouseExited(MouseEvent e) {
      	        // Restaurar la imagen original al quitar el mouse
-     	        ImageIcon originalImageIcon8 = new ImageIcon("imagenes/Pacientes2.png");
+     	        ImageIcon originalImageIcon8 = new ImageIcon("imagenes/Pacientes1.png");
      	        Image originalScaledImage8 = originalImageIcon8.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
      	        ImageIcon originalScaledImageIcon8 = new ImageIcon(originalScaledImage8);
      	        imageLabel7.setIcon(originalScaledImageIcon8);
