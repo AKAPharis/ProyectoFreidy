@@ -46,6 +46,7 @@ public class Builder {
 	private JButton btnGuardar;
 	private String[] comboBoxOptions = {"Cedula", "Pasaporte"};
     private String[] buttonLabels = {"Medico", "Enfermero"};
+    private JRadioButton selectedRadioButton;
 	
 
 
@@ -159,37 +160,25 @@ public class Builder {
     }
 
     
-    public void Registro() {
-    	String [] profesiones = {"Medico", "Enfermero"};
-    	
-    	SwingUtilities.invokeLater(() -> {
-        String password = getPasswordFromInputDialog();
-					
-        if (password != null) {
-        	if ("admin123".equals(password)) {
-        		int profesion = JOptionPane.showOptionDialog(null, "Que tipo de profesional de la salud desea registrar", "LifeSaver",  JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, profesiones, profesiones);
-        		
-        		switch (profesion) {
-				case 0:
-					registrarMedico();
-					break;
-					
-				case 1:
-					registrarEnfermero();
-					break;
+	public void Registro() {      
+		String correctPassword = "admin123";
+	    String enteredPassword = getPasswordFromInputDialog();
 
-				default:
-					break;
-				}
-        		
-            } else {
-            	JOptionPane.showMessageDialog(null, "La contraseña insertada no es la correcta", "Incorrecta", JOptionPane.ERROR_MESSAGE);
-            	Registro();
-            }
-        }
-                
-        });        
-    }
+	    while (enteredPassword != null && !enteredPassword.equals(correctPassword)) {
+	        JOptionPane.showMessageDialog(Ventana, "Contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+	        enteredPassword = getPasswordFromInputDialog();
+	    }
+
+	    if (enteredPassword != null && enteredPassword.equals(correctPassword)) {
+	        ButtonModel selectedButton = selectedRadioButton.getModel();
+	        
+	        if (selectedButton.getActionCommand().equals("Medico")) {
+	           registrarMedico();
+	        } else if (selectedButton.getActionCommand().equals("Enfermero")) {
+	            registrarEnfermero();
+	        }
+	    }
+	}
     
     
      
@@ -401,25 +390,146 @@ public class Builder {
 	}
 
 
-	private static String getPasswordFromInputDialog() {
-         JPasswordField passwordField = new JPasswordField();
-         int option = JOptionPane.showOptionDialog(
-                 null,
-                 passwordField,
-                 "Ingrese su contraseña:",
-                 JOptionPane.OK_CANCEL_OPTION,
-                 JOptionPane.PLAIN_MESSAGE,
-                 null,
-                 null,
-                 null);
+	
+	
+	 public static int generateRandomID() {
+	        // rango de valores para el ID
+	        int minValue = 10000;
+	        int maxValue = 99999;
 
-        
-         if (option == JOptionPane.OK_OPTION) {
-             return new String(passwordField.getPassword());
-         }
-         return null;
+	        // instancia de Random
+	        Random random = new Random();
+
+	        // Genera un número aleatorio dentro del rango especificado
+	        int generatedID = random.nextInt(maxValue - minValue + 1) + minValue;
+
+	        return generatedID;
+	    }
+	
+	 private void btnRegistroMedico(Medico medico, JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
+		 Documentacion documentoValue = medico.getDocumento();
+		    int idMedico = medico.getIdMedico();
+		    String exequaturValue = medico.getExequatur();
+		    String especializacionValue = medico.getEspecializacion();
+		    String nombreValue = medico.getNombre();
+		    String apellidoValue = medico.getApellido();
+		    String tipoDocumento = documentoValue.getTipo();
+		    String noDocumento = documentoValue.getNoDocumento();
+		    String contraseñaValue = medico.getContraseña();
+		    
+		    if (esEntero(noDocumento) && esEntero(exequaturValue)) {
+		    medico.setIdMedico(idMedico);
+		    medico.setNombre(nombreValue);
+		    medico.setApellido(apellidoValue);
+		    medico.setDocumento(documentoValue);
+		    medico.setExequatur(exequaturValue);
+		    medico.setEspecializacion(especializacionValue);
+		    medico.setContraseña(contraseñaValue);
+		    
+		    MedicoDAO medicoDAO = new MedicoDAO();
+			    if (medicoDAO.agregarMedico(medico) == 0) {
+			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+medico.getIdMedico());
+			    	ventanaEmergente.dispose();
+					Ventana.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+		    } else {
+		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento y el exequatur solo aceptan valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		    } 
+		}
+	 
+	 private void btnRegistroEnfermero(Enfermero enfermero, JTextField nombre, JTextField apellido,JComboBox<String> tipoDocumento, JTextField noDocumento, JTextField contraseña) {
+		 Documentacion documentoValue = enfermero.getDocumento();
+		    int idEnfermero = enfermero.getIdEnferma();
+		    String gradoValue = enfermero.getGrado();
+		    String nombreValue = enfermero.getNombre();
+		    String apellidoValue = enfermero.getApellido();
+		    String tipoDocumentoEnfetemero = documentoValue.getTipo();
+		    String noDocumentoEnfermero = documentoValue.getNoDocumento();
+		    String contraseñaValue = enfermero.getContraseña();
+		    
+		    if (esEntero(noDocumentoEnfermero)) {
+		    enfermero.setIdEnferma(idEnfermero);
+		    enfermero.setNombre(nombreValue);
+		    enfermero.setApellido(apellidoValue);
+		    enfermero.setDocumento(documentoValue);
+		    enfermero.setGrado(gradoValue);
+		    enfermero.setContraseña(contraseñaValue);
+		    
+		    EnfermeroDAO enfermeroDAO = new EnfermeroDAO();
+			    if (enfermeroDAO.agregarEnfermero(enfermero) == 0) {
+			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+enfermero.getIdEnferma());
+			    	ventanaEmergente.dispose();
+					Ventana.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+		    } else {
+		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento solo acepta valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		    }
+			
+		}
+
+	public static boolean esEntero(String cadena) {
+	        try {
+	            Long.parseLong(cadena);
+	            return true;
+	        } catch (NumberFormatException e) {
+	            return false;
+	        }
+	    }
+	
+	private ButtonGroup createButtonGroupPanel(JPanel panel, String[] buttonLabels, GridBagConstraints gbc, int gridy) {
+	    ButtonGroup buttonGroup = new ButtonGroup();
+	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
+
+	    for (int i = 0; i < buttonLabels.length; i++) {
+	        JRadioButton radioButton = new JRadioButton(buttonLabels[i]);
+	        radioButton.setActionCommand(buttonLabels[i]);
+	        buttonGroup.add(radioButton);
+	        buttonPanel.add(radioButton);
+
+	        radioButton.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                selectedRadioButton = radioButton;
+	            }
+	        });
+	        
+	        if (buttonLabels[i].equals("Medico")) {
+	            radioButton.setSelected(true);  // Seleccionar el botón "Medico" por defecto
+	            selectedRadioButton = radioButton;  // Establecerlo como seleccionado
+	        }
+	    }
+	    
+	    gbc.fill = GridBagConstraints.HORIZONTAL;
+	    gbc.weightx = 1.0;
+
+	    panel.add(buttonPanel, gbc);
+	    gbc.gridy++;
+
+	    return buttonGroup;
 	}
-    
+	
+	private static String getPasswordFromInputDialog() {
+        JPasswordField passwordField = new JPasswordField();
+        int option = JOptionPane.showOptionDialog(
+                null,
+                passwordField,
+                "Ingrese su contraseña:",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                null);
+
+       
+        if (option == JOptionPane.OK_OPTION) {
+            return new String(passwordField.getPassword());
+        }
+        return null;
+	}
+   
 	private JTextField createLabeledTextFieldPanel(JPanel panel, String labelText, String placeholder, GridBagConstraints gbc, int gridy) {
 		JPanel labeledTextFieldPanel = new JPanel(new BorderLayout());
 		
@@ -515,113 +625,6 @@ public class Builder {
 	    panel.add(comboBoxPanel, gbc);
 	    
 	    return comboBox;
-	}
-	
-	 public static int generateRandomID() {
-	        // rango de valores para el ID
-	        int minValue = 10000;
-	        int maxValue = 99999;
-
-	        // instancia de Random
-	        Random random = new Random();
-
-	        // Genera un número aleatorio dentro del rango especificado
-	        int generatedID = random.nextInt(maxValue - minValue + 1) + minValue;
-
-	        return generatedID;
-	    }
-	
-	 private void btnRegistroMedico(Medico medico, JTextField nombreMedico, JTextField apellidoMedico, JComboBox<String> tipoDocumentoMedico, JTextField noDocuementoMedico, JTextField exequatur, JTextField especializacion, JTextField contraseñaMedico) {
-		 Documentacion documentoValue = medico.getDocumento();
-		    int idMedico = medico.getIdMedico();
-		    String exequaturValue = medico.getExequatur();
-		    String especializacionValue = medico.getEspecializacion();
-		    String nombreValue = medico.getNombre();
-		    String apellidoValue = medico.getApellido();
-		    String tipoDocumento = documentoValue.getTipo();
-		    String noDocumento = documentoValue.getNoDocumento();
-		    String contraseñaValue = medico.getContraseña();
-		    
-		    if (esEntero(noDocumento) && esEntero(exequaturValue)) {
-		    medico.setIdMedico(idMedico);
-		    medico.setNombre(nombreValue);
-		    medico.setApellido(apellidoValue);
-		    medico.setDocumento(documentoValue);
-		    medico.setExequatur(exequaturValue);
-		    medico.setEspecializacion(especializacionValue);
-		    medico.setContraseña(contraseñaValue);
-		    
-		    MedicoDAO medicoDAO = new MedicoDAO();
-			    if (medicoDAO.agregarMedico(medico) == 0) {
-			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+medico.getIdMedico());
-			    	ventanaEmergente.dispose();
-					Ventana.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-		    } else {
-		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento y el exequatur solo aceptan valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
-		    } 
-		}
-	 
-	 private void btnRegistroEnfermero(Enfermero enfermero, JTextField nombre, JTextField apellido,JComboBox<String> tipoDocumento, JTextField noDocumento, JTextField contraseña) {
-		 Documentacion documentoValue = enfermero.getDocumento();
-		    int idEnfermero = enfermero.getIdEnferma();
-		    String gradoValue = enfermero.getGrado();
-		    String nombreValue = enfermero.getNombre();
-		    String apellidoValue = enfermero.getApellido();
-		    String tipoDocumentoEnfetemero = documentoValue.getTipo();
-		    String noDocumentoEnfermero = documentoValue.getNoDocumento();
-		    String contraseñaValue = enfermero.getContraseña();
-		    
-		    if (esEntero(noDocumentoEnfermero)) {
-		    enfermero.setIdEnferma(idEnfermero);
-		    enfermero.setNombre(nombreValue);
-		    enfermero.setApellido(apellidoValue);
-		    enfermero.setDocumento(documentoValue);
-		    enfermero.setGrado(gradoValue);
-		    enfermero.setContraseña(contraseñaValue);
-		    
-		    EnfermeroDAO enfermeroDAO = new EnfermeroDAO();
-			    if (enfermeroDAO.agregarEnfermero(enfermero) == 0) {
-			    	JOptionPane.showMessageDialog(ventanaEmergente, "El ID del nuevo medico es: "+enfermero.getIdEnferma());
-			    	ventanaEmergente.dispose();
-					Ventana.setVisible(true);
-				} else {
-					JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento o el exequatur ya existen en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-		    } else {
-		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento y el exequatur solo aceptan valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
-		    }
-			
-		}
-
-	public static boolean esEntero(String cadena) {
-	        try {
-	            Long.parseLong(cadena);
-	            return true;
-	        } catch (NumberFormatException e) {
-	            return false;
-	        }
-	    }
-	
-	private ButtonGroup createButtonGroupPanel(JPanel panel, String[] buttonLabels, GridBagConstraints gbc, int gridy) {
-	    ButtonGroup buttonGroup = new ButtonGroup();
-	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
-
-	    for (int i = 0; i < buttonLabels.length; i++) {
-	        JRadioButton radioButton = new JRadioButton(buttonLabels[i]);
-	        buttonGroup.add(radioButton);
-	        buttonPanel.add(radioButton);
-	    }
-	    
-	    gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
-
-	    panel.add(buttonPanel, gbc);
-	    gbc.gridy++;
-
-	    return buttonGroup;
 	}
 }
 
