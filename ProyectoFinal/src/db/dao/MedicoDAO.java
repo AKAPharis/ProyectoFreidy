@@ -46,7 +46,7 @@ public class MedicoDAO {
 					+ " where m.idMedico = " + id);
 
 			if(rs.next() == true) {
-			medico = new Medico(rs.getInt("m.idMedico"),rs.getString("m.exequatur"),rs.getString("m.especializacion"),rs.getString("m.nombre"),rs.getString("m.apellido"), new Documentacion(rs.getString("md.tipoDocumento"),rs.getString("md.noDocumento")),rs.getString("m.contraseña"));
+			medico = new Medico(rs.getInt("m.idMedico"),rs.getString("m.exequatur"),rs.getString("m.especializacion"),rs.getString("m.nombre"),rs.getString("m.apellido"), new Documentacion(rs.getString("dm.tipoDocumento"),rs.getString("dm.noDocumento")),rs.getString("m.contraseña"));
 			}
 			rs.close();
 			st.close();
