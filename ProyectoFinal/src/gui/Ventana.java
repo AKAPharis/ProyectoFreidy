@@ -404,7 +404,6 @@ public class Ventana {
 		        	            lbl3.setBounds(10, 95, 180, 30);
 		        	            agendar.add(lbl3);
 		        	                   	            
-   
 		        	            
 		        	            JComboBox<String> box2 = new JComboBox<>();
 		        	          
