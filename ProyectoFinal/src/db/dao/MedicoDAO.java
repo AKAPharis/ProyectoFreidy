@@ -40,7 +40,7 @@ public class MedicoDAO {
 		DBConnection connection = new DBConnection();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("select contraseña from Medicos where idEnfermero = " + id);
+			ResultSet rs = st.executeQuery("select contraseña from Medicos where idMedico = " + id);
 		
 			if(rs.next() == true) {
 			result = rs.getString("contraseña").equals(contraseña);

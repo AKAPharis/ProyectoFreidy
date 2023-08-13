@@ -107,17 +107,26 @@ public class Builder {
 
         // Agregar el campo de ID
         gbc.gridy = 2;
-        createLabeledTextFieldPanel(panel1, "ID:", "insertar ID", gbc, 3);
+        JTextField iDField = createLabeledTextFieldPanel(panel1, "ID:", "insertar ID", gbc, 3);
 
         // Agregar el campo de Contraseña
         gbc.gridy = 3;
-        createPasswordField(panel1, "Contraseña", gbc, 4);
+        JTextField contraseñaField = createPasswordField(panel1, "Contraseña", gbc, 4);
 
         // Agregar el botón "Iniciar sesión"
         gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.CENTER;
         btnGuardar = new JButton("Iniciar sesión");
         panel1.add(btnGuardar, gbc);
+        btnGuardar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = iDField.getText();
+				String contraseña = contraseñaField.getText();
+				inicioSesion(id, contraseña);
+				
+			}
+		});
         // Resto de tu código para el botón "Iniciar sesión"
 
         // Agregar el JLabel de registro
@@ -179,10 +188,67 @@ public class Builder {
 	        }
 	    }
 	}
+	
+	private void inicioSesion(String id, String contraseña) {
+		ButtonModel selectedButton = selectedRadioButton.getModel();
+	        
+	    if (selectedButton.getActionCommand().equals("Medico")) {
+	    	inicioMedico(id, contraseña);
+	    } else if (selectedButton.getActionCommand().equals("Enfermero")) {
+	    	inicioEnfermero(id, contraseña);
+	    }	
+	}
     
     
      
-    private void registrarMedico() {
+    private void inicioMedico(String id, String contraseña) {
+    	MedicoDAO mDao = new MedicoDAO();
+    	
+    	if (id.equals("insertar ID") || contraseña.equals("Contraseña")) {
+    		JOptionPane.showMessageDialog(Ventana, "Debe llenar los campos para iniciar secion", "Error", JOptionPane.ERROR_MESSAGE);
+		}else {
+			
+		if (esEntero(id)) {
+			int idEntero = Integer.parseInt(id);
+				
+			if (mDao.comprobarContraseña(idEntero, contraseña)) {
+				JOptionPane.showMessageDialog(Ventana, "Datos correctos :D");
+				JOptionPane.showMessageDialog(Ventana, "*se abre la ventana principal xd*");
+			}else {
+				JOptionPane.showMessageDialog(Ventana, "ID o contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+			} 
+		}else {
+			JOptionPane.showMessageDialog(Ventana, "El ID solo acepta valores enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		}
+	}
+
+	private void inicioEnfermero(String id, String contraseña) {
+		EnfermeroDAO eDao = new EnfermeroDAO();
+		
+		if (id.equals("insertar ID") || contraseña.equals("Contraseña")) {
+    		JOptionPane.showMessageDialog(Ventana, "Debe llenar los campos para iniciar secion", "Error", JOptionPane.ERROR_MESSAGE);
+		}else {
+			
+		if (esEntero(id)) {
+			int idEntero = Integer.parseInt(id);
+				
+			if (eDao.comprobarContraseña(idEntero, contraseña)) {
+				//94978
+				//1234567890
+				JOptionPane.showMessageDialog(Ventana, "Datos correctos :D");
+				JOptionPane.showMessageDialog(Ventana, "*se abre la ventana principal xd*");
+			}else {
+				JOptionPane.showMessageDialog(Ventana, "ID o contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);
+			} 
+		}else {
+			JOptionPane.showMessageDialog(Ventana, "El ID solo acepta valores enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		}
+		
+	}
+
+	private void registrarMedico() {
     	ventanaEmergente = new JFrame("Registro de medico");
     	ventanaEmergente.setSize(700, 537);
         ventanaEmergente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

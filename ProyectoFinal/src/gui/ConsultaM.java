@@ -46,7 +46,7 @@ public class ConsultaM extends JFrame{
 		this.medicoUsuario = medicoUsuario;
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
-	//	this.setExtendedState(MAXIMIZED_BOTH);
+		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setBounds(0, 0, 400, 400);
 		
 		panelVentana();
