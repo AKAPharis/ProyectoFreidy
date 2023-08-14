@@ -44,7 +44,30 @@ public class ConsultaDAO {
 	
 	
 	
-	
+	public Consulta getConsulta(int idConsulta,Medico encargado) {
+		Consulta consulta = null;
+		DBConnection connection = new DBConnection();
+		PacienteDAO pDAO = new PacienteDAO();
+		try {
+			Statement st = connection.getConnection().createStatement();
+			ResultSet rs = st.executeQuery("select c.idConsulta,c.fecha,p.idPaciente from Consulta c "
+					+ "inner join Pacientes p on p.idPaciente"
+					+ "where c.idConsulta = " + idConsulta);
+			if(rs.next()) {
+				consulta  = new Consulta(rs.getInt("c.idConsulta"),rs.getDate("c.fecha"),pDAO.getPaciente(rs.getInt("p.idPaciente"),encargado));				
+			}
+				
+			rs.close();
+			st.close();
+			connection.closeConnection();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+				
+		
+		
+		return consulta;
+	}
 	public List<Consulta> listaConsulta(Medico encargado) {
 		DBConnection connection = new DBConnection();
 		PacienteDAO pDAO = new PacienteDAO();
