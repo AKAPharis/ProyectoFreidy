@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +55,7 @@ import com.toedter.calendar.JCalendar;
 
 import Identidades.Medico;
 import Identidades.Paciente;
+import db.dao.ConsultaDAO;
 import db.dao.MedicoDAO;
 import db.dao.PacienteDAO;
 
@@ -472,10 +474,6 @@ public class Ventana {
      	    		newFrame.getContentPane().setLayout(null);
      	    		
      	    		
-     	    		
-     	    		DefaultTableModel model = new DefaultTableModel();
-     	    		model.addColumn("Ejemplo");
-     	    		
      	    		JButton btnP = new JButton("Agregar Consulta");
      	    		btnP.setBounds(10, 20, 200, 40);
      	    		btnP.setFont(new Font("", Font.BOLD, 20));
@@ -493,9 +491,23 @@ public class Ventana {
      	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
      	    		newFrame.add(verConsulta);
      	    		
+     	    		
+     	    		DefaultTableModel model = new DefaultTableModel();
+     	    		model.addColumn("IdConsulta");
+     	    		model.addColumn("Paciente");
+     	    		model.addColumn("Fecha");
+     	    		
+     	    		List<Identidades.Consulta> listaConsulta =  new ConsultaDAO().listaConsulta(medicoUsuario);
+     	    		
+     	    		for(Identidades.Consulta c : listaConsulta) {
+     	    			model.addRow(new Object [] {c.getIdConsulta(),c.getPaciente().getNombre(),c.getFecha()});;
+     	    		}
+     	    		
+     	    		
      	    		JTable tabla = new JTable(model);
-     	    		tabla.setBounds(100, 80, 500, 500);
-     	    		newFrame.add(tabla);
+     	    		JScrollPane sp = new JScrollPane(tabla);
+     	    		sp.setBounds(100, 80, 500, 500);
+     	    		newFrame.add(sp);
        	            
        	        }
        	

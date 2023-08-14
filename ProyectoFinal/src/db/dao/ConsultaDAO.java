@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.ArrayList;
 
 import Identidades.Consulta;
 import Identidades.Documentacion;
@@ -47,10 +48,10 @@ public class ConsultaDAO {
 	public List<Consulta> listaConsulta(Medico encargado) {
 		DBConnection connection = new DBConnection();
 		PacienteDAO pDAO = new PacienteDAO();
-		List<Consulta> lista = null;
+		List<Consulta> lista = new ArrayList<>();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("select c.idConsulta,c.fecha,c.estado,p.idPaciente from Consulta c"
+			ResultSet rs = st.executeQuery("select c.idConsulta,c.fecha,p.idPaciente from Consulta c "
 					+ "inner join Pacientes p on p.idPaciente = c.idPaciente ");
 			while(rs.next()) {
 				lista.add(new Consulta(rs.getInt("c.idConsulta"),rs.getDate("c.fecha"),pDAO.getPaciente(rs.getInt("p.idPaciente"),encargado)));				
