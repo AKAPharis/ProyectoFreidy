@@ -536,7 +536,7 @@ public class Builder {
 		    	JOptionPane.showMessageDialog(ventanaEmergente, "El numero de documento solo acepta valores numericos enteros.", "Error", JOptionPane.ERROR_MESSAGE);
 		    }
 			
-		}
+	 }
 
 	public static boolean esEntero(String cadena) {
 	        try {

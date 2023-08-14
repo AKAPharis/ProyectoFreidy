@@ -50,9 +50,10 @@ public class ConsultaDAO {
 		PacienteDAO pDAO = new PacienteDAO();
 		try {
 			Statement st = connection.getConnection().createStatement();
-			ResultSet rs = st.executeQuery("select c.idConsulta,c.fecha,p.idPaciente from Consulta c "
-					+ "inner join Pacientes p on p.idPaciente"
-					+ "where c.idConsulta = " + idConsulta);
+			ResultSet rs = st.executeQuery("\r\n"
+					+ "select c.idConsulta,c.fecha,p.idPaciente from Consulta c \r\n"
+					+ "					inner join Pacientes p on p.idPaciente = c.idPaciente\r\n"
+					+ "					where c.idConsulta =" + idConsulta);
 			if(rs.next()) {
 				consulta  = new Consulta(rs.getInt("c.idConsulta"),rs.getDate("c.fecha"),pDAO.getPaciente(rs.getInt("p.idPaciente"),encargado));				
 			}
