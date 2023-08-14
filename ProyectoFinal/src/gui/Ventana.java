@@ -611,6 +611,7 @@ public class Ventana {
   					@Override
   					public void actionPerformed(ActionEvent e) {
   						gui.Paciente paciente = new gui.Paciente(medicoUsuario);
+  						
   					}
   				});
      	    		

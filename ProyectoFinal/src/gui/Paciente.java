@@ -122,6 +122,8 @@ public class Paciente extends JFrame {
 				Identidades.Paciente paciente = new Identidades.Paciente(Builder.generateRandomID(), new Documentacion(comboBox.getSelectedItem().toString(), noDocumento.getText()), txtNombre.getText(), txtApellido.getText(), estado, false, medicoUsuario);
 				
 				new PacienteDAO().agregarPaciente(paciente);
+				
+				dispose();
 			}
 		});
 		btn.setBounds(56, 181, 181, 21);
