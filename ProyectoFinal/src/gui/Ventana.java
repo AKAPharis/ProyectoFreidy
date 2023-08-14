@@ -53,6 +53,7 @@ import javax.swing.table.TableColumn;
 
 import com.toedter.calendar.JCalendar;
 
+import Identidades.Consulta;
 import Identidades.Medico;
 import Identidades.Paciente;
 import db.dao.ConsultaDAO;
@@ -677,33 +678,32 @@ public class Ventana {
 		model = (DefaultTableModel) tabla.getModel();
 		if (filaSeleccionada != -1) {
             int idConsulta = (int) model.getValueAt(filaSeleccionada, 0);
-            String paciente = (String) model.getValueAt(filaSeleccionada, 1);
-            String nombre = (String) model.getValueAt(filaSeleccionada, 2);
+           Consulta consulta = new  ConsultaDAO().getConsulta(idConsulta, medicoUsuario);
 
             
             
-            mostrarDetalles(idConsulta, paciente, nombre);
+            mostrarDetalles(consulta);
         }
 		
 	}
 	
 	
 	
-	 private static void mostrarDetalles(int idConsulta, String paciente, String nombre) {
+	 private static void mostrarDetalles(Consulta consulta) {
 	        JFrame detallesFrame = new JFrame("Detalles");
 	        detallesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 	        JPanel panel = new JPanel(null); // Layout absoluto
 
-	        JLabel idLabel = new JLabel("ID: " + idConsulta);
+	        JLabel idLabel = new JLabel("ID: " + consulta.getIdConsulta());
 	        idLabel.setBounds(10, 10, 200, 20); // Posición y tamaño
 	        panel.add(idLabel);
 
-	        JLabel pacienteLabel = new JLabel("Paciente: " + paciente);
+	        JLabel pacienteLabel = new JLabel("Nomobre: " + consulta.getPaciente().getNombre());
 	        pacienteLabel.setBounds(10, 40, 200, 20); // Posición y tamaño
 	        panel.add(pacienteLabel);
 
-	        JLabel nombreLabel = new JLabel("Nombre: " + nombre);
+	        JLabel nombreLabel = new JLabel("Apellido: " + consulta.getPaciente().getApellido());
 	        nombreLabel.setBounds(10, 70, 200, 20); // Posición y tamaño
 	        panel.add(nombreLabel);
 
