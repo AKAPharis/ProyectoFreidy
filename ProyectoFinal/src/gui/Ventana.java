@@ -86,7 +86,7 @@ public class Ventana {
   	private DefaultTableModel model;
   	private Date selectedDate = null;
   	private JComboBox<Object> pacientes;
-  	private JTable tabla;
+  	private JTable tabla,tablaPacientes;
 
       
 
@@ -539,7 +539,7 @@ public class Ventana {
          gbcImage7.gridy = 0;
          gbcImage7.anchor = GridBagConstraints.LINE_START; // Align to the left
          gbcImage7.insets = new Insets(0, 900, 0, 200); // Add space to the right
- 
+         
          panel2.add(imageLabel7, gbcImage7);
          imageLabel7.addMouseListener(new MouseAdapter() {
      	    @Override
@@ -578,8 +578,22 @@ public class Ventana {
      	    		
      	    		
      	    		DefaultTableModel model = new DefaultTableModel();
+     	    		model.addColumn("Id Paciente");
      	    		model.addColumn("Nombre");
-     	    		model.addColumn("Consulta");
+     	    		model.addColumn("Apellido");
+     	    		model.addColumn("Estado");
+     	    		
+     	    		List<Identidades.Paciente> listaPacientes = new PacienteDAO().listaPacientes(medicoUsuario);
+     	    		
+     	    		for(Identidades.Paciente p : listaPacientes){
+     	    			model.addRow(new Object[] {p.getIdPaciente(),p.getNombre(),p.getApellido(),p.getEstado()});
+     	    		}
+     	    		tabla = new JTable(model);
+     	    		JScrollPane sp = new JScrollPane(tabla);
+     	    		
+     	    		
+     	    		
+     	    		
 
      	    	  JLabel lblF = new JLabel("LifeSaver");
      	    	  lblF.setBounds(10, 20, 300, 50);
