@@ -163,33 +163,7 @@ public class Ventana {
 
          panel1.add(label1, gbc);
          
-	        GridBagConstraints gbcButtonsPanel = new GridBagConstraints();
-
 	      
-	        labelR = createButtonLabel("Registrarse");
-	        labelR.setFont(new Font("Arial", Font.BOLD, 20));
-	        gbcButtonsPanel.gridx = 1; // Coloca en la misma columna que el label1
-	        gbcButtonsPanel.gridy = 0; // Siguiente fila
-	        gbcButtonsPanel.anchor = GridBagConstraints.FIRST_LINE_START; // Alinea a la esquina superior izquierda
-	        gbcButtonsPanel.insets = new Insets(0, 1230, 0, 20); // Ajusta los márgenes
-	        gbcButtonsPanel.weightx = 0.0; // Evita que el buttonsPanel se expanda horizontalmente
-	        gbcButtonsPanel.weighty = 0.0;
-	        
-	        
-	        labelI = createButtonLabel("Iniciar Sesión");
-	        labelI.setFont(new Font("Arial", Font.BOLD, 20));
-	        gbcButtonsPanel.gridx = 1; // Coloca en la misma columna que el label1
-	        gbcButtonsPanel.gridy = 0; // Siguiente fila
-	        gbcButtonsPanel.anchor = GridBagConstraints.FIRST_LINE_START; // Alinea a la esquina superior izquierda
-	        gbcButtonsPanel.insets = new Insets(50, 1210, 0, 0); // Ajusta los márgenes
-	        gbcButtonsPanel.weightx = 0.0; // Evita que el buttonsPanel se expanda horizontalmente
-	        gbcButtonsPanel.weighty = 0.0;
-	        
-       
-
-    
-   
-
        
 	     panel2 = new JPanel();
 	     panel2.setLayout(new GridBagLayout());
@@ -206,9 +180,6 @@ public class Ventana {
          panel2.add(imageLabel22, gbcImage22);
          imageLabel22.addMouseListener(new MouseAdapter() {
         	    private JButton btn;
-				private JButton btn1;
-				private JButton prevButton;
-				private JButton nextButton;
 
 				@Override
         	    public void mouseEntered(MouseEvent e) {
@@ -264,16 +235,7 @@ public class Ventana {
                         model.addRow(new Object[]{"10:00pm"});
                         model.addRow(new Object[]{"11:00pm"});
 
-                        /*
-                        prevButton = new JButton("<");
-                        prevButton.setBounds(550, 300, 200, 50);
-                        newFrame.add(prevButton);
-                        	
-                        nextButton = new JButton(">");
-                        nextButton.setBounds(550, 350, 200, 50);
-                        newFrame.add(nextButton);
-                        */
-                        
+
                         JCalendar calendar23 = new JCalendar();
         	    		calendar23.setBounds(550, 100, 200, 200);
         	    		newFrame.add(calendar23);
@@ -287,42 +249,6 @@ public class Ventana {
         	    		
         	    		   citas1.setRowHeight(40);
     	   
-        	/*    		
-        	    		 JComboBox<String> box = new JComboBox<>();
-        	    	        box.setBounds(30, 70, 180, 30);
-        	    	        
-        	    	        JPopupMenu popupMenu = new JPopupMenu();
-        	    	        JCalendar calendarBox = new JCalendar();
-        	    	        
-        	    	        calendarBox.addPropertyChangeListener("calendar", new PropertyChangeListener() {
-            	    		    @Override
-            	    		    public void propertyChange(PropertyChangeEvent evt) {
-            	    		        if (evt.getPropertyName().equals("calendar")) {
-            	    		            Calendar selectedCalendar = (Calendar) evt.getNewValue();
-            	    		            Date selectedDate = selectedCalendar.getTime();
-            	    		            box.setSelectedItem(selectedDate);
-            	    		            calendar23.setCalendar(selectedCalendar);
-            	    		            
-            	    		            
-            	    		        }
-            	    		    }
-            	    		});
-        	    	        
-
-        	    	        box.addMouseListener(new MouseAdapter() {
-        	    	            @Override
-        	    	            public void mouseClicked(MouseEvent e) {
-        	    	                if (SwingUtilities.isLeftMouseButton(e)) {
-        	    	                    calendarBox.setBounds(30, 100, 200, 200);
-        	    	                    popupMenu.show(box, 0, box.getHeight());
-        	    	                }
-        	    	            }
-        	    	        });
-        	    	        
-        	    	     
-        	    	        
-        	    	*/
-        	    		
         	    		
 
         	    		calendar23.addPropertyChangeListener("calendar", new PropertyChangeListener() {
@@ -336,34 +262,6 @@ public class Ventana {
         	    		    }
         	    		});
 
-        	    		/*
-        	    		class SynchronizeListener implements PropertyChangeListener {
-        	    		    public void propertyChange(PropertyChangeEvent evt) {
-        	    		        if (evt.getSource() instanceof JCalendar) {
-        	    		            JCalendar sourceCalendar = (JCalendar) evt.getSource();
-        	    		            JCalendar targetCalendar;
-
-        	    		            if (sourceCalendar == calendar23) {
-        	    		                targetCalendar = calendarBox;
-
-        	    		            } else {
-        	    		                targetCalendar = calendar23;
-
-        	    		            }
-
-        	    		            targetCalendar.setCalendar(sourceCalendar.getCalendar());
-        	    		        }
-        	    		    }
-        	    		}
-
-        	    		SynchronizeListener synchronizeListener = new SynchronizeListener();
-
-        	    		calendar23.addPropertyChangeListener("calendar", synchronizeListener);
-        	    		calendarBox.addPropertyChangeListener("calendar", synchronizeListener);
-
-        	    		// ... (Código existente)
-        	    	   */
-        	    		
         	    		
         	            btn = new JButton("Agregar cita");
         	            btn.setBounds(30, 20, 180, 30);
@@ -520,13 +418,6 @@ public class Ventana {
         	            
         	            newFrame.add(btn);
         	            
-        	            /*
-        	            btn1 = new JButton("Imprimir");
-        	            btn1.setBounds(580, 20, 180, 30);
-        	            btn1.setFont(new Font("", Font.BOLD, 20));
-
-        	            newFrame.add(btn1);
-        	            */
         	            
         	        }
         	    }
@@ -571,45 +462,46 @@ public class Ventana {
      	        if (SwingUtilities.isLeftMouseButton(e)) {
      	            // Abre la nueva ventana aquí
      	            // Por ejemplo, creando una nueva instancia de JFrame
-     	            JFrame newFrame = new JFrame("Nueva Ventana");
-     	            newFrame.setSize(700, 500);
-     	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     	        	 JFrame newFrame = new JFrame("Agregar Consulta");
+       	            newFrame.setSize(700, 500);
+       	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       	            newFrame.setVisible(true);
+       	           newFrame.setLocationRelativeTo(null);
+     	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      	            newFrame.setVisible(true);
-     	           newFrame.setLocationRelativeTo(null);
-   	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-   	            newFrame.setVisible(true);
-   	            newFrame.setResizable(false);
-   	    		newFrame.getContentPane().setLayout(null);
-   	    		
-   	    		
-   	    		DefaultTableModel model = new DefaultTableModel();
-   	    		model.addColumn("Ejemplo");
-   	    		
-   	    		JButton btnP = new JButton("Agregar Consulta");
-   	    		btnP.setBounds(10, 20, 200, 40);
-	            btnP.setFont(new Font("", Font.BOLD, 20));
-   	    		newFrame.add(btnP);
-   	    		btnP.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-					}
-				});
-   	    		
-   	    		JButton verConsulta = new JButton("Ver Consulta");
-   	    		verConsulta.setBounds(470, 20, 200, 40);
-   	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
-   	    		newFrame.add(verConsulta);
-   	    		
-   	    		JTable tabla = new JTable(model);
-   	    		tabla.setBounds(100, 80, 500, 500);
-   	    		newFrame.add(tabla);
-     	            
-     	        }
-     	
-     	    }
-     	});
+     	            newFrame.setResizable(false);
+     	    		newFrame.getContentPane().setLayout(null);
+     	    		
+     	    		
+     	    		
+     	    		DefaultTableModel model = new DefaultTableModel();
+     	    		model.addColumn("Ejemplo");
+     	    		
+     	    		JButton btnP = new JButton("Agregar Consulta");
+     	    		btnP.setBounds(10, 20, 200, 40);
+     	    		btnP.setFont(new Font("", Font.BOLD, 20));
+     	    		newFrame.add(btnP);
+     	    		btnP.addActionListener(new ActionListener() {
+  					
+  					@Override
+  					public void actionPerformed(ActionEvent e) {
+  						// TODO Auto-generated method stub
+  					}
+  				});
+     	    		
+     	    		JButton verConsulta = new JButton("Ver Consulta");
+     	    		verConsulta.setBounds(470, 20, 200, 40);
+     	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
+     	    		newFrame.add(verConsulta);
+     	    		
+     	    		JTable tabla = new JTable(model);
+     	    		tabla.setBounds(100, 80, 500, 500);
+     	    		newFrame.add(tabla);
+       	            
+       	        }
+       	
+       	    }
+       	});
         
          
          GridBagConstraints gbcImage5 = new GridBagConstraints();
@@ -660,15 +552,49 @@ public class Ventana {
      	        if (SwingUtilities.isLeftMouseButton(e)) {
      	            // Abre la nueva ventana aquí
      	            // Por ejemplo, creando una nueva instancia de JFrame
-     	            JFrame newFrame = new JFrame("Nueva Ventana");
-     	            newFrame.setSize(400, 300);
-     	            // Agrega componentes a la nueva ventana si es necesario
+     	           
+     	        	JFrame newFrame = new JFrame("Agregar Paciente");
+     	        	newFrame.setSize(700, 500);
+       	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       	            newFrame.setVisible(true);
+       	            newFrame.setLocationRelativeTo(null);
+     	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      	            newFrame.setVisible(true);
-     	        }
-     	    }
-     	    
-     	    
-     	});
+     	            newFrame.setResizable(false);
+     	    		newFrame.getContentPane().setLayout(null);
+     	    		
+     	    		
+     	    		DefaultTableModel model = new DefaultTableModel();
+     	    		model.addColumn("Nombre");
+     	    		model.addColumn("Consulta");
+
+     	    	  JLabel lblF = new JLabel("LifeSaver");
+     	    	  lblF.setBounds(10, 20, 300, 50);
+     	    	  lblF.setFont(new Font("Arial", Font.BOLD, 50));
+     	    	  newFrame.add(lblF);
+     	    	  
+     	    		JButton btnP = new JButton("Agregar Paciente");
+     	    		btnP.setBounds(450, 20, 200, 30);
+     	    		btnP.setFont(new Font("", Font.BOLD, 20));
+     	    		newFrame.add(btnP);
+     	    		btnP.addActionListener(new ActionListener() {
+  					
+  					@Override
+  					public void actionPerformed(ActionEvent e) {
+  						// TODO Auto-generated method stub
+  					}
+  				});
+     	    		
+     	    		
+     	    		JTable tabla = new JTable(model);
+     	    		tabla.setBounds(50, 80, 500, 500);
+     	    		newFrame.add(tabla);
+       	            
+       	        }
+       	
+       	    }
+       	});
+     	        	
                
          
          GridBagConstraints gbcImage9 = new GridBagConstraints();
@@ -703,218 +629,6 @@ public class Ventana {
 		 frame.getContentPane().add(scrollPane);
 		 
 		 
-	}
-
-	private JLabel createButtonLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setHorizontalAlignment(JLabel.RIGHT); // Align right
-        label.setForeground(Color.BLACK);
-        
-        label.addMouseListener(new MouseAdapter() {
-        	
-        	public void mouseClicked(MouseEvent e) {
-	            if (SwingUtilities.isLeftMouseButton(e)) {
-	                // Abre la nueva ventana aquí
-	                // Por ejemplo, creando una nueva instancia de JFrame
-	                JFrame newFrame = new JFrame("Nueva Ventana");
-	                newFrame.setSize(400, 300);
-	                newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	                
-	                newFrame.setVisible(true);
-	            }
-	        }
-        	
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                label.setForeground(Color.BLUE);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                label.setForeground(Color.BLACK);
-            }
-        });
-        return label;
-    } 
-	
-	
-	private JLabel createMenuLabel(String text) {
-	    JLabel label = new JLabel(text);
-	    label.setHorizontalAlignment(JLabel.CENTER);
-	    label.setForeground(Color.BLACK);
-
-	    label.addMouseListener(new MouseAdapter() {
-	        private JPopupMenu popupMenu;
-	        private JLabel selectedLabel;
-
-	        @Override
-	        public void mouseEntered(MouseEvent e) {
-	            label.setForeground(Color.BLUE);
-	            showMenu();
-	        }
-
-	        @Override
-	        public void mouseExited(MouseEvent e) {
-	            if (!label.equals(selectedLabel)) {
-	                label.setForeground(Color.BLACK);
-	            }
-	        }
-
-	        @Override
-	        public void mouseClicked(MouseEvent e) {
-	            if (SwingUtilities.isLeftMouseButton(e)) {
-	                if (selectedLabel != null) {
-	                    selectedLabel.setForeground(Color.BLACK);
-	                }
-	                selectedLabel = label;
-	                label.setForeground(Color.BLUE);
-	                showMenu();
-	            }
-	        }
-
-	        private void showMenu() {
-	            if (popupMenu == null) {
-	                popupMenu = new JPopupMenu();
-	                JMenuItem item1 = new JMenuItem("Sobre MeDick");
-	                JMenuItem item2 = new JMenuItem("Novedades y Noticias");
-	                item1.setBackground(Color.gray);
-	                
-	                item2.setBackground(Color.gray);
-
-	              
-	                item1.addActionListener(new ActionListener() {
-	                    @Override
-	                    public void actionPerformed(ActionEvent e) {
-	                        // Abre una nueva ventana con el contenido correspondiente
-	                        JFrame newFrame = new JFrame("Sobre MeDick");
-	                        newFrame.setSize(400, 300);
-	                        // Agrega componentes a la nueva ventana si es necesario
-	                        newFrame.setVisible(true);
-	                    }
-	                });
-
-	                item2.addActionListener(new ActionListener() {
-	                    @Override
-	                    public void actionPerformed(ActionEvent e) {
-	                        // Abre una nueva ventana con el contenido correspondiente
-	                        JFrame newFrame = new JFrame("Novedades y Noticias");
-	                        newFrame.setSize(400, 300);
-	                        // Agrega componentes a la nueva ventana si es necesario
-	                        newFrame.setVisible(true);
-	                    }
-	                });
-
-	                popupMenu.add(item1);
-	                popupMenu.add(item2);
-	            }
-
-	            popupMenu.show(label, label.getWidth() / 2, label.getHeight());
-	        }
-	    });
-
-	    return label;
-	}
-
-
-
-	
-	
-	private JLabel createClickableLabel(String text) {
-	    JLabel label = new JLabel(text);
-	    label.setHorizontalAlignment(JLabel.CENTER);
-	    label.setForeground(Color.BLACK);
-
-	    label.addMouseListener(new MouseAdapter() {
-	        @Override
-	        public void mouseClicked(MouseEvent e) {
-	            if (SwingUtilities.isLeftMouseButton(e)) {
-	                // Abre la nueva ventana aquí
-	                // Por ejemplo, creando una nueva instancia de JFrame
-	                JFrame newFrame = new JFrame("Nueva Ventana");
-	                newFrame.setSize(400, 300);
-	                newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	                newFrame.setVisible(true);
-	            }
-	        }
-
-	        @Override
-	        public void mouseEntered(MouseEvent e) {
-	            label.setForeground(Color.BLUE);
-	        }
-
-	        @Override
-	        public void mouseExited(MouseEvent e) {
-	            label.setForeground(Color.BLACK);
-	        }
-	    });
-
-	    return label;
-	}
-	
-	private JLabel abajo(String text) {
-		
-		  JLabel label = new JLabel(text);
-		    label.setHorizontalAlignment(JLabel.CENTER);
-		    label.setForeground(Color.BLACK);
-		    
-		    label.addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mouseClicked(MouseEvent e) {
-		        	  SwingUtilities.invokeLater(new Runnable() {
-		                  @Override
-		                  public void run() {
-		                      Rectangle rect = panel4.getBounds();
-		                      scrollPane.getViewport().scrollRectToVisible(rect);
-		                  }
-		        	  });
-		        }
-
-		        @Override
-		        public void mouseEntered(MouseEvent e) {
-		            label.setForeground(Color.BLUE);
-		        }
-
-		        @Override
-		        public void mouseExited(MouseEvent e) {
-		            label.setForeground(Color.BLACK);
-		        }
-		    });
-		    
-		    return label;
-		
-	}
-	
-	private JLabel abajo2(String text) {
-		
-		  JLabel label = new JLabel(text);
-		    label.setHorizontalAlignment(JLabel.CENTER);
-		    label.setForeground(Color.BLACK);
-		    
-		    label.addMouseListener(new MouseAdapter() {
-		        @Override
-		        public void mouseClicked(MouseEvent e) {
-		        	  SwingUtilities.invokeLater(new Runnable() {
-		                  @Override
-		                  public void run() {
-		                      Rectangle rect = panel3.getBounds();
-		                      scrollPane.getViewport().scrollRectToVisible(rect);
-		                  }
-		        	  });
-		        }
-
-		        @Override
-		        public void mouseEntered(MouseEvent e) {
-		            label.setForeground(Color.BLUE);
-		        }
-
-		        @Override
-		        public void mouseExited(MouseEvent e) {
-		            label.setForeground(Color.BLACK);
-		        }
-		    });
-		    
-		    return label;
-		
 	}
 
 }
