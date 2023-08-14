@@ -86,6 +86,7 @@ public class Ventana {
   	private DefaultTableModel model;
   	private Date selectedDate = null;
   	private JComboBox<Object> pacientes;
+  	private JTable tabla;
 
       
 
@@ -483,6 +484,7 @@ public class Ventana {
   					@Override
   					public void actionPerformed(ActionEvent e) {
   						// TODO Auto-generated method stub
+  						agregarConsulta();
   					}
   				});
      	    		
@@ -504,7 +506,7 @@ public class Ventana {
      	    		}
      	    		
      	    		
-     	    		JTable tabla = new JTable(model);
+     	    		tabla = new JTable(model);
      	    		JScrollPane sp = new JScrollPane(tabla);
      	    		sp.setBounds(100, 80, 500, 500);
      	    		newFrame.add(sp);
@@ -641,6 +643,39 @@ public class Ventana {
 		 
 		 
 	}
+	
+	private void agregarConsulta() {
+		
+		int filaSeleccionada = tabla.getSelectedRow();
+		if (filaSeleccionada != -1) {
+            String paciente = (String) model.getValueAt(filaSeleccionada, 0);
+            int idConsulta = (int) model.getValueAt(filaSeleccionada, 1);
+            String nombre = (String) model.getValueAt(filaSeleccionada, 2);
+            String fecha = (String) model.getValueAt(filaSeleccionada, 3);
+
+            
+            
+            mostrarDetalles(idConsulta, paciente, nombre, fecha);
+        }
+		
+	}
+	
+	
+	
+	private static void mostrarDetalles(int idConsulta, String paciente, String nombre, String fecha) {
+        JFrame detallesFrame = new JFrame("Detalles");
+        detallesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel("ID: " + idConsulta));
+        panel.add(new JLabel("Nombre: " + paciente));
+        panel.add(new JLabel("Apellido: " + paciente));
+        panel.add(new JLabel("Ciudad: " + fecha));
+
+        detallesFrame.getContentPane();
+        detallesFrame.setVisible(true);
+    }
 
 }
 
