@@ -151,7 +151,6 @@ public class ConsultaM extends JFrame {
         panelBotones.add(btnAtras);
     }
 
-    // ... (resto del código)
 
 
 
