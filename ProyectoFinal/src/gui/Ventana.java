@@ -588,10 +588,12 @@ public class Ventana {
      	    		for(Identidades.Paciente p : listaPacientes){
      	    			model.addRow(new Object[] {p.getIdPaciente(),p.getNombre(),p.getApellido(),p.getEstado()});
      	    		}
+     	    		
      	    		tabla = new JTable(model);
-     	    		JScrollPane sp = new JScrollPane(tabla);
-     	    		
-     	    		
+     	    		JScrollPane sp = new JScrollPane();
+     	    		sp.setViewportView(tabla);
+     	    		sp.setBounds(50, 80, 500, 500);
+     	    		newFrame.add(sp);
      	    		
      	    		
 
@@ -612,11 +614,11 @@ public class Ventana {
   					}
   				});
      	    		
-     	    		
+     	    		/*
      	    		JTable tabla = new JTable(model);
      	    		tabla.setBounds(50, 80, 500, 500);
      	    		newFrame.add(tabla);
-       	            
+       	         */   
        	        }
        	
        	    }
