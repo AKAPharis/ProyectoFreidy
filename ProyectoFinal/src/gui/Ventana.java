@@ -484,13 +484,23 @@ public class Ventana {
   					@Override
   					public void actionPerformed(ActionEvent e) {
   						// TODO Auto-generated method stub
-  						agregarConsulta();
+  						ConsultaM consulta = new ConsultaM(medicoUsuario);
+  						
+  						
   					}
   				});
      	    		
      	    		JButton verConsulta = new JButton("Ver Consulta");
      	    		verConsulta.setBounds(470, 20, 200, 40);
      	    		verConsulta.setFont(new Font("", Font.BOLD, 20));
+     	    		verConsulta.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							agregarConsulta();
+						}
+					});
      	    		newFrame.add(verConsulta);
      	    		
      	    		
@@ -664,35 +674,46 @@ public class Ventana {
 	private void agregarConsulta() {
 		
 		int filaSeleccionada = tabla.getSelectedRow();
+		model = (DefaultTableModel) tabla.getModel();
 		if (filaSeleccionada != -1) {
-            String paciente = (String) model.getValueAt(filaSeleccionada, 0);
-            int idConsulta = (int) model.getValueAt(filaSeleccionada, 1);
+            int idConsulta = (int) model.getValueAt(filaSeleccionada, 0);
+            String paciente = (String) model.getValueAt(filaSeleccionada, 1);
             String nombre = (String) model.getValueAt(filaSeleccionada, 2);
-            String fecha = (String) model.getValueAt(filaSeleccionada, 3);
 
             
             
-            mostrarDetalles(idConsulta, paciente, nombre, fecha);
+            mostrarDetalles(idConsulta, paciente, nombre);
         }
 		
 	}
 	
 	
 	
-	private static void mostrarDetalles(int idConsulta, String paciente, String nombre, String fecha) {
-        JFrame detallesFrame = new JFrame("Detalles");
-        detallesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	 private static void mostrarDetalles(int idConsulta, String paciente, String nombre) {
+	        JFrame detallesFrame = new JFrame("Detalles");
+	        detallesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("ID: " + idConsulta));
-        panel.add(new JLabel("Nombre: " + paciente));
-        panel.add(new JLabel("Apellido: " + paciente));
-        panel.add(new JLabel("Ciudad: " + fecha));
+	        JPanel panel = new JPanel(null); // Layout absoluto
 
-        detallesFrame.getContentPane();
-        detallesFrame.setVisible(true);
-    }
+	        JLabel idLabel = new JLabel("ID: " + idConsulta);
+	        idLabel.setBounds(10, 10, 200, 20); // Posición y tamaño
+	        panel.add(idLabel);
 
-}
+	        JLabel pacienteLabel = new JLabel("Paciente: " + paciente);
+	        pacienteLabel.setBounds(10, 40, 200, 20); // Posición y tamaño
+	        panel.add(pacienteLabel);
 
+	        JLabel nombreLabel = new JLabel("Nombre: " + nombre);
+	        nombreLabel.setBounds(10, 70, 200, 20); // Posición y tamaño
+	        panel.add(nombreLabel);
+
+	        /*
+	        JLabel fechaLabel = new JLabel("Fecha: " + fecha);
+	        fechaLabel.setBounds(10, 100, 200, 20); // Posición y tamaño
+	        panel.add(fechaLabel);
+*/
+	        detallesFrame.getContentPane().add(panel);
+	        detallesFrame.setSize(300, 200); // Tamaño de la ventana
+	        detallesFrame.setVisible(true);
+	    }
+	}

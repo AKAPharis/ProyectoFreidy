@@ -143,6 +143,7 @@ public class ConsultaM extends JFrame {
         btnGuardar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 agregarConsulta();
+                dispose();
             }
         });
         panelBotones.add(btnGuardar);
