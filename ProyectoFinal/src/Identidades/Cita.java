@@ -6,12 +6,13 @@ public class Cita {
 	
 	private int id;
 	private Date fecha;
-	private Consulta consulta;
-	
-	public Cita(int id,Date fecha,Consulta consulta) {
+	private Paciente paciente;
+	private String estado;
+	public Cita(int id,Date fecha,Paciente paciente,String estado) {
 		this.setId(id);
 		this.setFecha(fecha);
-		this.setConsulta(consulta);
+		this.setPaciente(paciente);
+		this.setEstado(estado);
 	}
 	
 	public int getId() {
@@ -26,10 +27,20 @@ public class Cita {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public Consulta getConsulta() {
-		return consulta;
+
+	public Paciente getPaciente() {
+		return paciente;
 	}
-	public void setConsulta(Consulta consulta) {
-		this.consulta = consulta;
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 }
