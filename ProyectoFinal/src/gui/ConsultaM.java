@@ -75,9 +75,9 @@ public class ConsultaM extends JFrame {
 
         pacientes = new JComboBox<Object>();
         PacienteDAO pDAO = new PacienteDAO();
-        List<Paciente> listaPacientes = pDAO.listaPacientes(medicoUsuario);
+        List<Identidades.Paciente> listaPacientes = pDAO.listaPacientes(medicoUsuario);
 
-        for (Paciente p : listaPacientes) {
+        for (Identidades.Paciente p : listaPacientes) {
             pacientes.addItem(p.getNombre() + " " + p.getApellido());
         }
         GridBagConstraints gbcP = new GridBagConstraints();
@@ -190,7 +190,7 @@ public class ConsultaM extends JFrame {
 		
 		String pacienteNombre = (String) pacientes.getSelectedItem();
 		String[] completo = pacienteNombre.split(" ");
-		Paciente paciente = pDAO.getPaciente(completo[0], medicoUsuario);
+		Identidades.Paciente paciente = pDAO.getPaciente(completo[0], medicoUsuario);
 		System.out.println(paciente.getIdPaciente());
 		//	public Consulta(int idConsulta,Date fecha,Paciente paciente,Receta receta,Medico encargado,String[] diagnostico) {
 		Identidades.Consulta consulta = new Identidades.Consulta(Builder.generateRandomID(),

@@ -216,7 +216,7 @@ public class Builder {
 				//1234567890
 				Ventana v = new Ventana(idEntero);
 				v.main(idEntero);
-				
+				Ventana.dispose();
 				
 			}else {
 				JOptionPane.showMessageDialog(Ventana, "ID o contraseña incorrecta. Inténtalo nuevamente.", "Error", JOptionPane.ERROR_MESSAGE);

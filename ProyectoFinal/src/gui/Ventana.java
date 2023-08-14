@@ -594,7 +594,7 @@ public class Ventana {
   					
   					@Override
   					public void actionPerformed(ActionEvent e) {
-  						// TODO Auto-generated method stub
+  						gui.Paciente paciente = new gui.Paciente(medicoUsuario);
   					}
   				});
      	    		
