@@ -118,7 +118,6 @@ public class Ventana {
 	public void initialize() {
 		 frame = new JFrame("Hospital MeDick");
 		 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-         frame.setResizable(false);
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.getContentPane().setLayout(new GridLayout(1, 1));
 		 
