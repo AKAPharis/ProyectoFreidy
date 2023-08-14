@@ -692,6 +692,8 @@ public class Ventana {
 	 private static void mostrarDetalles(Consulta consulta) {
 	        JFrame detallesFrame = new JFrame("Detalles");
 	        detallesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	        detallesFrame.setResizable(false);
+	        detallesFrame.setLocationRelativeTo(null);
 
 	        JPanel panel = new JPanel(null); // Layout absoluto
 
@@ -699,7 +701,7 @@ public class Ventana {
 	        idLabel.setBounds(10, 10, 200, 20); // Posición y tamaño
 	        panel.add(idLabel);
 
-	        JLabel pacienteLabel = new JLabel("Nomobre: " + consulta.getPaciente().getNombre());
+	        JLabel pacienteLabel = new JLabel("Nombre: " + consulta.getPaciente().getNombre());
 	        pacienteLabel.setBounds(10, 40, 200, 20); // Posición y tamaño
 	        panel.add(pacienteLabel);
 
