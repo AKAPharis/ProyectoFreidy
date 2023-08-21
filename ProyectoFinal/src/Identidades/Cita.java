@@ -13,6 +13,8 @@ public class Cita {
 		this.setFecha(fecha);
 		this.setPaciente(paciente);
 		this.setEstado(estado);
+		
+		
 	}
 	
 	public int getId() {

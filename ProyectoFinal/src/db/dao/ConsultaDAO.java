@@ -76,7 +76,8 @@ public class ConsultaDAO {
 		try {
 			Statement st = connection.getConnection().createStatement();
 			ResultSet rs = st.executeQuery("select c.idConsulta,c.fecha,p.idPaciente from Consulta c "
-					+ "inner join Pacientes p on p.idPaciente = c.idPaciente ");
+					+ "inner join Pacientes p on p.idPaciente = c.idPaciente "
+					+ "where c.idMedico = " + encargado.getIdMedico());
 			while(rs.next()) {
 				lista.add(new Consulta(rs.getInt("c.idConsulta"),rs.getDate("c.fecha"),pDAO.getPaciente(rs.getInt("p.idPaciente"),encargado)));				
 			}

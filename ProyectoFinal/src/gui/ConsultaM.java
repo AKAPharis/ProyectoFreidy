@@ -29,7 +29,7 @@ public class ConsultaM extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("Consulta Médica"); // Agregado: Cambia el título del frame
-
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         panelVentana();
         this.add(panelVentana);
     }
@@ -192,7 +192,6 @@ public class ConsultaM extends JFrame {
 		String[] completo = pacienteNombre.split(" ");
 		Identidades.Paciente paciente = pDAO.getPaciente(completo[0], medicoUsuario);
 		System.out.println(paciente.getIdPaciente());
-		//	public Consulta(int idConsulta,Date fecha,Paciente paciente,Receta receta,Medico encargado,String[] diagnostico) {
 		Identidades.Consulta consulta = new Identidades.Consulta(Builder.generateRandomID(),
 				date,
 				paciente,

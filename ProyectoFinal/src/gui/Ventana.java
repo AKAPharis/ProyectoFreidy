@@ -38,6 +38,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -68,6 +69,7 @@ import javax.swing.JMenu;
 public class Ventana {
 	private Medico medicoUsuario;
 	private JFrame frame;
+	
 	private JScrollPane scrollPane;
 	private JPanel panel1, panel2, panel3, panel4;
 	private JLabel label1, labelR, iniciarL, labelColor, labelI, lbl1, lbl2, lbl3, lbl4;
@@ -121,7 +123,10 @@ public class Ventana {
 	 */
 	public void initialize() {
 		 frame = new JFrame("Hospital MeDick");
-		 frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		// frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		 frame.setBounds(10,10,1600,800);
+		 frame.setResizable(false);
+		 frame.setLocationRelativeTo(null);
 		 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 frame.getContentPane().setLayout(new GridLayout(1, 1));
 		 
@@ -468,7 +473,7 @@ public class Ventana {
      	        	 JFrame newFrame = new JFrame("Agregar Consulta");
        	            newFrame.setSize(700, 500);
        	            newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       	            newFrame.setVisible(true);
+       	            newFrame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);     
        	           newFrame.setLocationRelativeTo(null);
      	        	newFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
      	            newFrame.setVisible(true);
